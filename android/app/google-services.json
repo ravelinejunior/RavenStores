@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "768176417884",
+    "firebase_url": "https://ravelinewebcommerce.firebaseio.com",
+    "project_id": "ravelinewebcommerce",
+    "storage_bucket": "ravelinewebcommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768176417884:android:4abeb6d6d0bca900374a99",
+        "android_client_info": {
+          "package_name": "br.com.ravelinestores.ravelinestores"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768176417884-aqcpdoe2v68jm2fg39ps1rr54jbd5rfk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.ravelinestores.ravelinestores",
+            "certificate_hash": "ac25e20a1df6eecc1e49149d127c5e8c63004101"
+          }
+        },
+        {
+          "client_id": "768176417884-21s45ei2t9bvsvggkphqjhtpilvtg8q7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6RzvReqlgf2d2OuN5cZSOWcbCKkGafCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768176417884-21s45ei2t9bvsvggkphqjhtpilvtg8q7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
