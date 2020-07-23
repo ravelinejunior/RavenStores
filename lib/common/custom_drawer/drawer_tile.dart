@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ravelinestores/models/page_manager.dart';
 
 class DrawerTile extends StatelessWidget {
   //declarar icone por parametro pois ele se alterará de acordo com passagem de objeto
@@ -10,9 +12,15 @@ class DrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+//var de pagina atual
+    final int curPage = context.watch<PageManager>().pageGo;
+
     return InkWell(
       onTap: () {
+        //passar para outra pagina
+        context.read<PageManager>().setPage(page);
         print(page);
+        print(curPage);
       },
       splashColor: Colors.red,
       child: SizedBox(
@@ -25,7 +33,8 @@ class DrawerTile extends StatelessWidget {
               child: Icon(
                 iconData,
                 size: 32.0,
-                color: Colors.grey[700],
+                //selecionar cor de acordo com pagina atual
+                color: curPage == page ? Colors.red : Colors.grey[700],
               ),
             ),
 
@@ -34,7 +43,8 @@ class DrawerTile extends StatelessWidget {
               title,
               style: TextStyle(
                 fontSize: 16.0,
-                color: Colors.grey[700],
+                //selecionar cor de acordo com pagina atual
+                color: curPage == page ? Colors.red : Colors.grey[700],
               ),
             )
           ],
