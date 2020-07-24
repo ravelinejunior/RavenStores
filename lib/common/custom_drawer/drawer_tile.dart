@@ -15,6 +15,9 @@ class DrawerTile extends StatelessWidget {
 //var de pagina atual
     final int curPage = context.watch<PageManager>().pageGo;
 
+    //cor primaria
+    final Color primaryColor = Theme.of(context).primaryColor;
+
     return InkWell(
       onTap: () {
         //passar para outra pagina
@@ -22,7 +25,7 @@ class DrawerTile extends StatelessWidget {
         print(page);
         print(curPage);
       },
-      splashColor: Colors.red,
+      splashColor: primaryColor,
       child: SizedBox(
         height: 60,
         child: Row(
@@ -34,7 +37,7 @@ class DrawerTile extends StatelessWidget {
                 iconData,
                 size: 32.0,
                 //selecionar cor de acordo com pagina atual
-                color: curPage == page ? Colors.red : Colors.grey[700],
+                color: curPage == page ? primaryColor : Colors.grey[700],
               ),
             ),
 
@@ -44,7 +47,7 @@ class DrawerTile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.0,
                 //selecionar cor de acordo com pagina atual
-                color: curPage == page ? Colors.red : Colors.grey[700],
+                color: curPage == page ? primaryColor : Colors.grey[700],
               ),
             )
           ],

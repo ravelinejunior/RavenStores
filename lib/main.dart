@@ -12,9 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Raveline's Stores",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+          primaryColor: const Color.fromARGB(255, 4, 125, 141),
+          accentColor: Colors.white,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+          appBarTheme: AppBarTheme(elevation: 0.0)),
       debugShowCheckedModeBanner: false,
       home: BaseScreen(),
     );
