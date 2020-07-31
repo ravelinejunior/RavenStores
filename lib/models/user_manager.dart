@@ -44,6 +44,28 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
+  //AUTENTICAÇÃO DE CADASTRO USUARIO
+  Future<void> signUp({User user, Function onFail, Function onSuccess}) async {
+    loading = true;
+
+    //como pode ocorrer exceções usar try catch
+    try {
+      final AuthResult result = await auth.createUserWithEmailAndPassword(
+          email: user.email, password: user.password);
+
+      // this.user = result.user;
+      //salvando id do usuario
+      user.id = result.user.uid;
+
+      //aguardar dados serem salvos
+      await user.saveData();
+      onSuccess();
+    } on PlatformException catch (e) {
+      onFail(getErrorString(e.code));
+    }
+    loading = false;
+  }
+
   Future<void> _loadCurrentUser() async {
     //retorna usuario logado
     final FirebaseUser currentUser = await auth.currentUser();

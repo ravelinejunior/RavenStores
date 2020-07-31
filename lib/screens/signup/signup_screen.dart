@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/helpers/validators.dart';
 import 'package:ravelinestores/models/user.dart';
+import 'package:provider/provider.dart';
+import 'package:ravelinestores/models/user_manager.dart';
 
 class SignUpScreen extends StatelessWidget {
   //para acionar os validators, criar uma key
@@ -127,7 +129,28 @@ class SignUpScreen extends StatelessWidget {
                           return;
                         }
                         //enviar objeto para user manager
-
+                        //acessar usermanager
+                        context.read<UserManager>().signUp(
+                              user: user,
+                              onSuccess: () {
+                                // #TODO: POP
+                                debugPrint("Sucesso");
+                              },
+                              //caso falhe o cadastro
+                              onFail: (e) {
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text(
+                                    "Falha ao cadastrar: $e",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.redAccent,
+                                  duration: Duration(seconds: 4),
+                                ));
+                              },
+                            );
                       }
                     },
                   ),
