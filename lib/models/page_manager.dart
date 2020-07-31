@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PageManager {
   PageManager(this._pageController);
 
-  PageController _pageController;
+  final PageController _pageController;
   //metodo para navegar entre as paginas
 
   int pageGo = 0;

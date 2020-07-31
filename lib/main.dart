@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/models/user_manager.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
+import 'package:ravelinestores/screens/signup/signup_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +24,18 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
             appBarTheme: AppBarTheme(elevation: 0.0)),
         debugShowCheckedModeBanner: false,
-        home: BaseScreen(),
+        initialRoute: '/base',
+        //settings recebe as informações da rota
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/signup':
+              return MaterialPageRoute(builder: (_) => SignUpScreen());
+
+            case '/base':
+            default:
+              return MaterialPageRoute(builder: (_) => BaseScreen());
+          }
+        },
       ),
     );
   }

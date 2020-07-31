@@ -4,14 +4,21 @@ import 'package:ravelinestores/helpers/validators.dart';
 import 'package:ravelinestores/models/user.dart';
 import 'package:ravelinestores/models/user_manager.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   //controllers
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
+
   TextEditingController senhaController = TextEditingController();
 
-  //keys para formulario
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +26,19 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Entrar'),
         centerTitle: true,
+        //CADASTRAR WIDGET
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              //vincular signup com o signup screen no main
+              Navigator.of(context).pushReplacementNamed('/signup');
+            },
+            child: Text(
+              "Criar conta",
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
+            ),
+          )
+        ],
       ),
       body: Center(
         //COLUMN COLOCADO PARA DEPOIS ADIÇÃO DE IMAGEM DE LOGO ACIMA DO CARD

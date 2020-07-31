@@ -6,13 +6,25 @@ import 'package:flutter/services.dart';
 
 class UserManager extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseUser user;
 //tratar exceções
 
-  bool loading = false;
+//pegar usuario logado
+  UserManager() {
+    _loadCurrentUser();
+  }
+
+  bool _loading = false;
+  bool get loading => _loading;
+  //set
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   //metodo para autenticar usuarios
   Future<void> signIn({User user, Function onFail, Function onSucess}) async {
-    setLoading(true);
+    loading = true;
     try {
       final AuthResult result = await auth.signInWithEmailAndPassword(
           email: user.email, password: user.password);
@@ -20,6 +32,7 @@ class UserManager extends ChangeNotifier {
       await Future.delayed(Duration(seconds: 4));
 
       //apos receber o resultado da operação, verificar os resultados
+      this.user = result.user;
 
       onSucess();
     } on PlatformException catch (e) {
@@ -27,12 +40,18 @@ class UserManager extends ChangeNotifier {
       onFail(getErrorString(e.code));
     }
 
-    setLoading(false);
+    //metodo para verificar se ha algo carregando
+    loading = false;
   }
 
-  //metodo para verificar se ha algo carregando
-  void setLoading(bool value) {
-    loading = value;
+  Future<void> _loadCurrentUser() async {
+    //retorna usuario logado
+    final FirebaseUser currentUser = await auth.currentUser();
+    //caso user seja != null, salvar usuario dentro do user manager
+    if (currentUser != null) {
+      user = currentUser;
+      print(user.uid);
+    }
     notifyListeners();
   }
 }
