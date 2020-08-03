@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/models/user_manager.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
+import 'package:ravelinestores/screens/login/login_screen.dart';
 import 'package:ravelinestores/screens/signup/signup_screen.dart';
 
 void main() {
@@ -13,6 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
+      //padrao lazy é verdadeiro quando chamado
+      lazy: false,
       //acessar a classe de usuarios de qualquer lugar do app
       create: (_) => UserManager(),
       child: MaterialApp(
@@ -30,6 +33,8 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/signup':
               return MaterialPageRoute(builder: (_) => SignUpScreen());
+            case '/login':
+              return MaterialPageRoute(builder: (_) => LoginScreen());
 
             case '/base':
             default:

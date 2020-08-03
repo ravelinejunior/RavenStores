@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
 import 'package:ravelinestores/models/page_manager.dart';
-import 'package:ravelinestores/screens/login/login_screen.dart';
 
 class BaseScreen extends StatelessWidget {
   //page view que irá controlar o page view
@@ -16,7 +15,6 @@ class BaseScreen extends StatelessWidget {
         controller: pageController,
         //colocar as telas dentro do children
         children: <Widget>[
-          LoginScreen(),
           Scaffold(
             appBar: AppBar(
               title: const Text("Home"),

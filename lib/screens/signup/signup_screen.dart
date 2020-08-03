@@ -134,7 +134,7 @@ class SignUpScreen extends StatelessWidget {
                               user: user,
                               onSuccess: () {
                                 // #TODO: POP
-                                debugPrint("Sucesso");
+                                Navigator.of(context).pop();
                               },
                               //caso falhe o cadastro
                               onFail: (e) {

@@ -4,6 +4,13 @@ class User {
   //construtor
   User({this.email, this.password, this.name, this.id});
 
+  //criar objeto com usuario logado
+  User.fromDocument(DocumentSnapshot documentSnapshot) {
+    name = documentSnapshot.data['name'] as String;
+    email = documentSnapshot.data['email'] as String;
+    id = documentSnapshot.documentID;
+  }
+
   Firestore data = Firestore.instance;
 
   String id;

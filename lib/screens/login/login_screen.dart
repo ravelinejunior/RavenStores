@@ -140,6 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     },
                                     onSucess: () {
                                       // #TODO: FECHAR TELA DE LOGIN
+                                      Navigator.of(context).pop();
                                     });
                               }
                             },

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/common/custom_drawer/drawer_tile.dart';
 
+import 'custom_drawer_header.dart';
+
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -8,6 +10,8 @@ class CustomDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           //criar um objeto que representa um item do drawer
+          //widget Inicial
+          CustomDrawerHeader(),
           DrawerTile(Icons.home, "Home", 0),
           DrawerTile(Icons.category, "Categorias", 1),
           DrawerTile(Icons.format_list_numbered, "Produtos", 2),
