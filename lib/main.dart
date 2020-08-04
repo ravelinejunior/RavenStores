@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
@@ -13,11 +14,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      //padrao lazy é verdadeiro quando chamado
-      lazy: false,
-      //acessar a classe de usuarios de qualquer lugar do app
-      create: (_) => UserManager(),
+    return MultiProvider(
+      providers: [
+        //lista de providers
+        ChangeNotifierProvider(
+          create: (cnProvider) => UserManager(),
+          lazy: false,
+        ),
+        Provider(
+          create: (productProvider) => ProductManager(),
+          lazy: false,
+        ),
+      ],
       child: MaterialApp(
         title: "Raveline's Stores",
         theme: ThemeData(
