@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ravelinestores/models/user_manager.dart';
+import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class CustomDrawerHeader extends StatefulWidget {

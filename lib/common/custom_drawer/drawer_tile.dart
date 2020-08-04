@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ravelinestores/models/page_manager.dart';
+import 'package:ravelinestores/managers/page_manager.dart';
 
 class DrawerTile extends StatelessWidget {
   //declarar icone por parametro pois ele se alterará de acordo com passagem de objeto

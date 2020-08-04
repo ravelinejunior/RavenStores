@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
-import 'package:ravelinestores/models/page_manager.dart';
+import 'package:ravelinestores/managers/page_manager.dart';
 
 class BaseScreen extends StatelessWidget {
   //page view que irá controlar o page view

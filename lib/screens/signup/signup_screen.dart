@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ravelinestores/helpers/validators.dart';
 import 'package:ravelinestores/models/user.dart';
 import 'package:provider/provider.dart';
-import 'package:ravelinestores/models/user_manager.dart';
+import 'package:ravelinestores/managers/user_manager.dart';
 
 class SignUpScreen extends StatefulWidget {
   //para acionar os validators, criar uma key

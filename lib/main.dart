@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ravelinestores/models/user_manager.dart';
+import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
 import 'package:ravelinestores/screens/signup/signup_screen.dart';
