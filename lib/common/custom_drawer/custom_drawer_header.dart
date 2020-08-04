@@ -3,9 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:ravelinestores/models/user_manager.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class CustomDrawerHeader extends StatelessWidget {
+class CustomDrawerHeader extends StatefulWidget {
+  @override
+  _CustomDrawerHeaderState createState() => _CustomDrawerHeaderState();
+}
+
+class _CustomDrawerHeaderState extends State<CustomDrawerHeader> {
   String url =
       "https://www.comercialdesafio.com.br/wp-content/uploads/2016/06/logo-comercial-desafio.png";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +21,7 @@ class CustomDrawerHeader extends StatelessWidget {
       child: Consumer<UserManager>(
         builder: (context, userManager, child) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //#TODO 2 verificar se irá funcionar
@@ -26,34 +32,31 @@ class CustomDrawerHeader extends StatelessWidget {
                   height: 80),
 
               //NOME DA LOJA WIDGET
-              Expanded(
-                child: Text(
-                  "Comercial Desafio LTDA",
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic),
-                ),
+
+              Text(
+                "Comercial Desafio LTDA",
+                overflow: TextOverflow.fade,
+                style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic),
               ),
 
-              SizedBox(height: 8),
+              // SizedBox(height: 8),
 
               //NOME Do Usuario WIDGET
-              Expanded(
-                child: Text(
-                  //fazer condição para verificação de usuario logado
-                  "Olá, ${userManager.user?.name ?? ''}",
-                  overflow: TextOverflow.fade,
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                //fazer condição para verificação de usuario logado
+                "Olá ${userManager.user?.name ?? ', visitante.'}",
+                overflow: TextOverflow.fade,
+                maxLines: 2,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Divider(),
+
               //button widget
               InkWell(
                 splashColor: Colors.blueAccent,
@@ -73,7 +76,6 @@ class CustomDrawerHeader extends StatelessWidget {
                     Navigator.of(context).pushNamed('/login');
                 },
               ),
-              Divider(),
             ],
           );
         },
