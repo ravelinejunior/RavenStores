@@ -20,7 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  String _anim = "carrinho";
+//  String _anim = "carrinho";
+  String _anim = "bonesSales";
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.greenAccent,
+                color: Colors.white,
                 fontStyle: FontStyle.italic,
                 fontSize: 36,
               ),
@@ -53,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
               shape: BoxShape.circle,
             ),
             child: FlareActor(
-              "assets/Carrinho.flr",
+              "assets/bonesSales.flr",
               animation: _anim,
               alignment: Alignment.center,
               fit: BoxFit.cover,

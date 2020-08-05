@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:ravelinestores/models/product.dart';
 
-class ProductManager {
+class ProductManager extends ChangeNotifier {
   final Firestore firestore = Firestore.instance;
   //gerenciador de produtos do firebase
   ProductManager() {
@@ -8,13 +10,18 @@ class ProductManager {
     _loadAllProducts();
   }
 
+  //lista de produtos
+  List<Product> allProducts = [];
+
   Future<void> _loadAllProducts() async {
     //recuperar docs
     final QuerySnapshot querySnapshot =
         await firestore.collection("Products").getDocuments();
 
-    for (DocumentSnapshot doc in querySnapshot.documents) {
-      print(doc.data);
-    }
+    //converter documento para produto
+    allProducts =
+        querySnapshot.documents.map((d) => Product.fromDocument(d)).toList();
+
+    notifyListeners();
   }
 }

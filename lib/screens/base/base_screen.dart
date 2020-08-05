@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
 import 'package:ravelinestores/managers/page_manager.dart';
+import 'package:ravelinestores/screens/products/products_screen.dart';
 
 class BaseScreen extends StatelessWidget {
   //page view que irá controlar o page view
@@ -22,14 +23,10 @@ class BaseScreen extends StatelessWidget {
             ), //DRAWER WIDGET
             drawer: CustomDrawer(),
           ),
-          Scaffold(
-            appBar: AppBar(
-              title: const Text("Home2"),
-              centerTitle: true,
-              backgroundColor: Colors.deepPurple,
-            ), //DRAWER WIDGET
-            drawer: CustomDrawer(),
-          ),
+
+          //Produtos Screen
+          ProductsScreen(),
+
           Scaffold(
             appBar: AppBar(
               title: const Text("Home3"),

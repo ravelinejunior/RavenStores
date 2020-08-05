@@ -4,6 +4,7 @@ import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
+import 'package:ravelinestores/screens/products/products_screen.dart';
 import 'package:ravelinestores/screens/signup/signup_screen.dart';
 import 'package:ravelinestores/screens/splash_screen/splash_screen.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           create: (cnProvider) => UserManager(),
           lazy: false,
         ),
-        Provider(
+        ChangeNotifierProvider(
           create: (productProvider) => ProductManager(),
           lazy: false,
         ),
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => SignUpScreen());
             case '/login':
               return MaterialPageRoute(builder: (_) => LoginScreen());
+
+            case '/products':
+              return MaterialPageRoute(builder: (_) => ProductsScreen());
 
             case '/splash':
               return MaterialPageRoute(builder: (context) => SplashScreen());

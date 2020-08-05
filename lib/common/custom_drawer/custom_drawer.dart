@@ -35,6 +35,7 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.format_list_numbered, "Produtos", 2),
               DrawerTile(Icons.format_list_bulleted, "Meus Pedidos", 3),
               DrawerTile(Icons.location_on, "Lojas", 4),
+              //footer
             ],
           ),
         ],
