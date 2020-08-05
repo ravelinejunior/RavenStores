@@ -5,6 +5,7 @@ import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
 import 'package:ravelinestores/screens/signup/signup_screen.dart';
+import 'package:ravelinestores/screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
             appBarTheme: AppBarTheme(elevation: 0.0)),
         debugShowCheckedModeBanner: false,
-        initialRoute: '/base',
+        initialRoute: '/splash',
         //settings recebe as informações da rota
         onGenerateRoute: (settings) {
           switch (settings.name) {
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => SignUpScreen());
             case '/login':
               return MaterialPageRoute(builder: (_) => LoginScreen());
+
+            case '/splash':
+              return MaterialPageRoute(builder: (context) => SplashScreen());
 
             case '/base':
             default:
