@@ -31,6 +31,8 @@ class ProductListTile extends StatelessWidget {
               placeholder: kTransparentImage,
               image: product.images.first,
               fit: BoxFit.fill,
+              height: 120,
+              width: 120,
             ),
             const SizedBox(width: 16),
             //TEXTOS WIDGET

@@ -10,6 +10,30 @@ class ProductManager extends ChangeNotifier {
     _loadAllProducts();
   }
 
+  //pesquisa
+  String _search = '';
+  //criar get e set pois preciso notificar a alteração
+  String get search => _search;
+
+  set search(String value) {
+    _search = value;
+    notifyListeners();
+  }
+
+  //lista de produtos com pesquisa
+  List<Product> get filteredProducts {
+    final List<Product> filteredProducts = [];
+
+    if (search.isEmpty) {
+      filteredProducts.addAll(allProducts);
+    } else {
+      filteredProducts.addAll(allProducts
+          .where((p) => p.name.toLowerCase().contains(search.toLowerCase())));
+    }
+
+    return filteredProducts;
+  }
+
   //lista de produtos
   List<Product> allProducts = [];
 
