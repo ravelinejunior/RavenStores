@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
+import 'package:ravelinestores/models/product.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
+import 'package:ravelinestores/screens/product_screen/product_screen.dart';
 import 'package:ravelinestores/screens/products/products_screen.dart';
 import 'package:ravelinestores/screens/signup/signup_screen.dart';
 import 'package:ravelinestores/screens/splash_screen/splash_screen.dart';
@@ -48,6 +50,11 @@ class MyApp extends StatelessWidget {
 
             case '/products':
               return MaterialPageRoute(builder: (_) => ProductsScreen());
+
+            case '/product':
+              return MaterialPageRoute(
+                builder: (_) => ProductScreen(settings.arguments as Product),
+              );
 
             case '/splash':
               return MaterialPageRoute(builder: (context) => SplashScreen());
