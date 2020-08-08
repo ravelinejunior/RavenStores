@@ -16,6 +16,11 @@ class UserManager extends ChangeNotifier {
     _loadCurrentUser();
   }
 
+  //recuperar senha
+  void recoverPass(String email) {
+    auth.sendPasswordResetEmail(email: email);
+  }
+
   bool _loading = false;
   bool get loading => _loading;
   //set
