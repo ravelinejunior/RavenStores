@@ -19,6 +19,16 @@ class Product extends ChangeNotifier {
     notifyListeners();
   }
 
+  //recuperar o tamanho com os dados
+  ItemSize findSize(String name) {
+    //caso tamanho seja removido
+    try {
+      return sizesList.firstWhere((size) => size.name == name);
+    } catch (e) {
+      return null;
+    }
+  }
+
 //verificar se existe stock geral
   int get totalStock {
     int stock = 0;

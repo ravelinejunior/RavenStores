@@ -1,6 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ravelinestores/managers/cart_manager.dart';
 
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/product.dart';
@@ -97,7 +98,7 @@ class ProductScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                     child: Text(
-                      "Tamanhos",
+                      "Tipos",
                       style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
@@ -136,7 +137,11 @@ class ProductScreen extends StatelessWidget {
                                 ? () {
                                     //verificar se usuario está logado
                                     if (userManager.isLoggedIn) {
-                                      // #TODO 3 ADICIONAR AO CARRINHO
+                                      context
+                                          .read<CartManager>()
+                                          .addToCart(product);
+                                      //ir para tela de carrinho
+                                      Navigator.of(context).pushNamed('/cart');
                                     } else {
                                       Navigator.of(context).pushNamed('/login');
                                     }

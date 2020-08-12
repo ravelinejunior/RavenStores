@@ -4,6 +4,9 @@ class User {
   //construtor
   User({this.email, this.password, this.name, this.id});
 
+  //referencia do cart Firestore
+  CollectionReference get cartReference => firestoreRef.collection('cart');
+
   //criar objeto com usuario logado
   User.fromDocument(DocumentSnapshot documentSnapshot) {
     name = documentSnapshot.data['name'] as String;
