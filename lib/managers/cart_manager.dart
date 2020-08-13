@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/cart_products.dart';
@@ -42,7 +42,7 @@ class CartManager extends ChangeNotifier {
     for (int i = 0; i < items.length; i++) {
       final cartProduct = items[i];
       //verificar quantidade de itens em um produto é menor que 0
-      if (cartProduct.quantity == 0) {
+      if (cartProduct.quantity == -1) {
         removeFromCart(cartProduct);
 
         //remover um indice para remontar a tela

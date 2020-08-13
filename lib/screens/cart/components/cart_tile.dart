@@ -106,7 +106,8 @@ class CartTile extends StatelessWidget {
 
                       CustomIconButton(
                         iconData: Icons.remove,
-                        color: Colors.red,
+                        color:
+                            cartProduct.quantity > 1 ? Colors.blue : Colors.red,
                         onTap: cartProduct.removeQuantity,
                       ),
 
@@ -133,10 +134,7 @@ class CartTile extends StatelessWidget {
                                   ),
                                   FlatButton(
                                     onPressed: () {
-                                      context
-                                          .read<CartManager>()
-                                          .removeFromCart(cartProduct);
-
+                                      cartProduct.zeroProducts();
                                       Navigator.of(context).pop();
                                     },
                                     child: Text(

@@ -47,7 +47,13 @@ class CartProduct extends ChangeNotifier {
 
   // remover quantidade de produtos
   Future<void> removeQuantity() async {
-    if (quantity > 0) await quantity--;
+    if (quantity > 1) await quantity--;
+    notifyListeners();
+  }
+
+  //zerar produtos
+  Future<void> zeroProducts() async {
+    quantity = -1;
     notifyListeners();
   }
 
