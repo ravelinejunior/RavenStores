@@ -4,6 +4,14 @@ import 'package:ravelinestores/models/item_size.dart';
 import 'package:ravelinestores/models/product.dart';
 
 class CartProduct extends ChangeNotifier {
+  Product product;
+  Firestore firestore = Firestore.instance;
+
+  String productId;
+  String id;
+  String size;
+  int quantity;
+
   //construtor
   CartProduct.fromProduct(this.product) {
     productId = product.id;
@@ -18,10 +26,12 @@ class CartProduct extends ChangeNotifier {
     id = doc.documentID;
 
 //recuperar o produto com o id selecionado
-    firestore
-        .document('Products/$productId')
-        .get()
-        .then((doc) => product = Product.fromDocument(doc));
+    firestore.document('Products/$productId').get().then(
+      (doc) {
+        product = Product.fromDocument(doc);
+        notifyListeners();
+      },
+    );
   }
 
   //verificar se é stackable
@@ -37,7 +47,7 @@ class CartProduct extends ChangeNotifier {
 
   // remover quantidade de produtos
   Future<void> removeQuantity() async {
-    if (quantity > 1) await quantity--;
+    if (quantity > 0) await quantity--;
     notifyListeners();
   }
 
@@ -69,11 +79,6 @@ class CartProduct extends ChangeNotifier {
     };
   }
 
-  Product product;
-  Firestore firestore = Firestore.instance;
-
-  String productId;
-  String id;
-  String size;
-  int quantity;
+  //getter do preço total
+  num get totalPrice => unitPrice * quantity;
 }

@@ -136,6 +136,7 @@ class CartTile extends StatelessWidget {
                                       context
                                           .read<CartManager>()
                                           .removeFromCart(cartProduct);
+
                                       Navigator.of(context).pop();
                                     },
                                     child: Text(

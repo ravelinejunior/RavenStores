@@ -9,6 +9,7 @@ import 'package:ravelinestores/models/user.dart';
 class CartManager extends ChangeNotifier {
   List<CartProduct> items = [];
   User user;
+  num productsPrice = 0;
 
   //ADD PRODUCTS
   void addToCart(Product product) {
@@ -25,6 +26,9 @@ class CartManager extends ChangeNotifier {
       user.cartReference
           .add(cartProduct.toCartItemMap())
           .then((doc) => cartProduct.id = doc.documentID);
+
+      //atualizar tela sempre que adicionar produto
+      _onItemUpdated();
     }
 
     notifyListeners();
@@ -32,14 +36,25 @@ class CartManager extends ChangeNotifier {
 
   //atualizar toda vez que usuario alterar numero de itens
   void _onItemUpdated() {
+    productsPrice = 0.0;
+
     //atualizar quantidade de produtos
-    for (final cartProduct in items) {
+    for (int i = 0; i < items.length; i++) {
+      final cartProduct = items[i];
       //verificar quantidade de itens em um produto é menor que 0
       if (cartProduct.quantity == 0) {
-        // removeFromCart(cartProduct);
+        removeFromCart(cartProduct);
+
+        //remover um indice para remontar a tela
+        i--;
+        continue;
       }
 
+      //atualizar preço
+      productsPrice += cartProduct.totalPrice;
+
       _updateCartProduct(cartProduct);
+      notifyListeners();
     }
   }
 
@@ -47,33 +62,18 @@ class CartManager extends ChangeNotifier {
   void removeFromCart(CartProduct cartProduct) {
     items.removeWhere((p) => p.id == cartProduct.id);
     user.cartReference.document(cartProduct.id).delete();
+    cartProduct.quantity = 0;
     //remover o listener do cartProduct removido
     cartProduct.removeListener(_onItemUpdated);
     notifyListeners();
   }
 
-  Future<dynamic> removeProduct(BuildContext context) {
-    return showDialog(
-        context: context,
-        child: AlertDialog(
-          title: Text("Excluir"),
-          content: Text("Deseja realmente excluir esse item?"),
-          actions: [
-            FlatButton(onPressed: () {}, child: Text("Não")),
-            FlatButton(onPressed: () {}, child: Text("Sim")),
-          ],
-          elevation: 20,
-          scrollable: true,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ));
-  }
-
   //atualizar no firebase
   void _updateCartProduct(CartProduct cartProduct) {
-    user.cartReference
-        .document(cartProduct.id)
-        .updateData(cartProduct.toCartItemMap());
+    if (cartProduct.id != null)
+      user.cartReference
+          .document(cartProduct.id)
+          .updateData(cartProduct.toCartItemMap());
   }
 
   //update user
@@ -87,6 +87,7 @@ class CartManager extends ChangeNotifier {
     }
   }
 
+//recuperar todos os documentos do cart
   Future<void> _loadCartItems() async {
     //recuperar todos os documentos do cart
     final QuerySnapshot cartSnap = await user.cartReference.getDocuments();
@@ -96,5 +97,15 @@ class CartManager extends ChangeNotifier {
           (cart) => CartProduct.fromDocument(cart)..addListener(_onItemUpdated),
         )
         .toList();
+  }
+
+  //verificar se carrinho é valido ou nao
+  bool get isCartValid {
+    //verificar cada cartProduct
+    for (final cartProduct in items) {
+      if (!cartProduct.hasStock) return false;
+    }
+
+    return true;
   }
 }
