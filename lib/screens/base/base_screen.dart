@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
 import 'package:ravelinestores/managers/page_manager.dart';
+import 'package:ravelinestores/screens/home/home_screen.dart';
 import 'package:ravelinestores/screens/products/products_screen.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -16,14 +17,8 @@ class BaseScreen extends StatelessWidget {
         controller: pageController,
         //colocar as telas dentro do children
         children: <Widget>[
-          Scaffold(
-            appBar: AppBar(
-              title: const Text("Home"),
-              centerTitle: true,
-            ), //DRAWER WIDGET
-            drawer: CustomDrawer(),
-          ),
-
+          //home
+          HomeScreen(),
           //Produtos Screen
           ProductsScreen(),
 

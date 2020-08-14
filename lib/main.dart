@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
+import 'package:ravelinestores/managers/home_manager.dart';
 import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/product.dart';
@@ -29,6 +30,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (productProvider) => ProductManager(),
+          lazy: false,
+        ),
+        Provider<HomeManager>(
+          create: (contextHome) => HomeManager(),
           lazy: false,
         ),
         //toda vez que houver alteração no userManager ou cartmanager ele notificará a classe

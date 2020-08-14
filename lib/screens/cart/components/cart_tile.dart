@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_widgets/custom_icon_button.dart';
-import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/models/cart_products.dart';
 import 'package:transparent_image/transparent_image.dart';
 
