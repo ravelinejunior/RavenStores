@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           create: (productProvider) => ProductManager(),
           lazy: false,
         ),
-        Provider<HomeManager>(
+        ChangeNotifierProvider<HomeManager>(
           create: (contextHome) => HomeManager(),
           lazy: false,
         ),

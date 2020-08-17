@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:ravelinestores/models/section.dart';
 
-class HomeManager {
+class HomeManager extends ChangeNotifier {
   final Firestore firestore = Firestore.instance;
   List<Section> sections = [];
 
@@ -20,6 +21,7 @@ class HomeManager {
         //transformar em um objeto seção
         sections.add(Section.fromDocument(document));
       }
+      notifyListeners();
     });
   }
 }

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
+import 'package:ravelinestores/managers/home_manager.dart';
+
+import 'components/section_list.dart';
+import 'components/section_staggered.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -38,11 +43,26 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               //transforma widgets em widgets slivers
-              SliverToBoxAdapter(
-                child: Container(
-                  height: 1000,
-                  width: 500,
-                ),
+              Consumer<HomeManager>(
+                builder: (context, homeManager, child) {
+                  //definir uma lista dos filhos, transformar cada seção em um child
+                  final List<Widget> children =
+                      homeManager.sections.map<Widget>(
+                    (section) {
+                      switch (section.type) {
+                        case 'staggered':
+                          return SectionStaggered(section);
+                        case 'list':
+                          return SectionList(section);
+                        default:
+                          return Container();
+                      }
+                    },
+                  ).toList();
+
+                  return SliverList(
+                      delegate: SliverChildListDelegate(children));
+                },
               ),
             ],
           ),
