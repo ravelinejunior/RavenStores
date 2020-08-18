@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ravelinestores/managers/page_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -70,7 +71,8 @@ class _CustomDrawerHeaderState extends State<CustomDrawerHeader> {
                 ),
                 onTap: () {
                   if (userManager.isLoggedIn) {
-                    //#TODO: 3 logout
+                    //remover usuario da pagina admin quando fizer logout
+                    context.read<PageManager>().setPage(0);
                     userManager.signOut();
                   } else
                     Navigator.of(context).pushNamed('/login');

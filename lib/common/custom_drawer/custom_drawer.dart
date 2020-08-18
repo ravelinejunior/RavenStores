@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/drawer_tile.dart';
+import 'package:ravelinestores/managers/user_manager.dart';
 
 import 'custom_drawer_header.dart';
 
@@ -35,7 +37,25 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.format_list_bulleted, "Meus Pedidos", 2),
               DrawerTile(Icons.location_on, "Lojas", 3),
               DrawerTile(Icons.category, "Categorias", 4),
-              //footer
+
+              //admin part
+              Consumer<UserManager>(
+                builder: (context, userManager, child) {
+                  if (userManager.adminEnabled) {
+                    return Column(
+                      children: [
+                        const Divider(),
+                        DrawerTile(Icons.settings, "Usuários", 5),
+                        DrawerTile(Icons.settings_applications,
+                            "Pedidos Realizados", 6),
+                      ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+              //TODO 4: FOOTER
             ],
           ),
         ],

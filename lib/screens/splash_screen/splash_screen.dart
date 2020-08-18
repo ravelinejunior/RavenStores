@@ -7,18 +7,10 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    Future.delayed(Duration(seconds: 5)).then((_) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => BaseScreen(),
-      ));
-    });
-  }
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> animation;
 
 //  String _anim = "carrinho";
   String _anim = "bonesSales";
@@ -39,13 +31,14 @@ class _SplashScreenState extends State<SplashScreen> {
               style: TextStyle(
                 color: Colors.white,
                 fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
                 fontSize: 36,
               ),
             ),
           ),
           Container(
-            width: 400,
-            height: 400,
+            width: animation.value,
+            height: animation.value,
             margin: EdgeInsets.all(8),
             decoration: BoxDecoration(
               //borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -63,5 +56,43 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Future.delayed(Duration(seconds: 6)).then((_) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => BaseScreen(),
+      ));
+    });
+
+    //valores da animação
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    animation = Tween<double>(begin: 50, end: 400).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+    });
+
+    controller.forward();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

@@ -108,7 +108,7 @@ class ProductsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Theme.of(context).primaryColor,
         elevation: 10,
-        child: Icon(Icons.shopping_basket),
+        child: Icon(Icons.shopping_cart),
       ),
     );
   }

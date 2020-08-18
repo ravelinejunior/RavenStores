@@ -19,7 +19,7 @@ class SectionList extends StatelessWidget {
 
           //carregar imagens
           SizedBox(
-            height: 200.0,
+            height: 175.0,
             //para colocar espaçamento entre itens
             child: ListView.separated(
               //definir direção da lista

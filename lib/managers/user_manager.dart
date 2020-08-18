@@ -77,6 +77,7 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
+//carregar dados do usuario
   Future<void> _loadCurrentUser({FirebaseUser firebaseUser}) async {
     //retorna usuario logado
     final FirebaseUser currentUser = firebaseUser ?? await auth.currentUser();
@@ -85,10 +86,19 @@ class UserManager extends ChangeNotifier {
       final DocumentSnapshot docUser =
           await data.collection("Users").document(currentUser.uid).get();
       user = User.fromDocument(docUser);
-      print(user.name);
+
+      //verificar se usuario é um admin
+      final docAdmin = await data.collection('Admin').document(user.id).get();
+      if (docAdmin.exists) {
+        user.admin = true;
+      }
+
       notifyListeners();
     }
   }
+
+  //habilitar modo admin
+  bool get adminEnabled => user != null && user.admin;
 
   //METODO DE SIGNOUT
   Future<void> signOut() async {

@@ -21,6 +21,7 @@ class User {
   String password;
   String name;
   String passConf;
+  bool admin = false;
 
   //criar referencia ao no de usuario
   DocumentReference get firestoreRef => data.document('Users/$id');
