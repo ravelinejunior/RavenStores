@@ -30,8 +30,8 @@ class ProductScreen extends StatelessWidget {
                   return IconButton(
                     icon: Icon(Icons.edit, color: Colors.white),
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed('/editProduct');
+                      Navigator.of(context).pushReplacementNamed('/editProduct',
+                          arguments: product);
                     },
                     splashColor: Colors.orange,
                   );

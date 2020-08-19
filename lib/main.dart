@@ -89,7 +89,8 @@ class MyApp extends StatelessWidget {
 
             case '/editProduct':
               return MaterialPageRoute(
-                builder: (_) => EditProductScreen(),
+                builder: (_) =>
+                    EditProductScreen(settings.arguments as Product),
               );
 
             case '/splash':
