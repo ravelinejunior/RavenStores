@@ -23,9 +23,27 @@ class ProductScreen extends StatelessWidget {
         appBar: AppBar(
           actions: <Widget>[
             //widget editar
-            IconButton(
-              icon: Icon(Icons.edit, color: Colors.white),
-              onPressed: () {},
+            Consumer<UserManager>(
+              builder: (context, userManager, child) {
+                //ENVIA PARA EDIÇÃO DE PRODUTO
+                if (userManager.adminEnabled)
+                  return IconButton(
+                    icon: Icon(Icons.edit, color: Colors.white),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed('/editProduct');
+                    },
+                    splashColor: Colors.orange,
+                  );
+                else
+                  return IconButton(
+                    icon: Icon(Icons.add_shopping_cart, color: Colors.white),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/cart');
+                    },
+                    splashColor: Colors.orange,
+                  );
+              },
             ),
           ],
           title: Text(product.name),

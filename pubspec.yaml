@@ -38,6 +38,8 @@ dependencies:
   firebase_storage: ^3.1.1
   provider: ^4.3.1
   flare_flutter: ^2.0.5
+  alphabet_list_scroll_view: ^1.0.6
+  faker: ^1.2.1
 
 dev_dependencies:
   flutter_test:

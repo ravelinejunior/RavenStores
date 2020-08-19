@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
+import 'package:ravelinestores/managers/user_manager.dart';
 
 class PriceCard extends StatelessWidget {
   //construtor
@@ -18,6 +19,7 @@ class PriceCard extends StatelessWidget {
     final cartManager = context.watch<CartManager>();
     final productsPrice = cartManager.productsPrice;
     final totalPriceTemp = productsPrice + 5.99;
+    final userManager = context.watch<UserManager>();
 
     return Card(
       elevation: 10,
@@ -42,7 +44,9 @@ class PriceCard extends StatelessWidget {
                 children: [
                   Text('Subtotal'),
                   Text(
-                    'R\$ ${productsPrice.toStringAsFixed(2).replaceAll('.', ',')}',
+                    userManager.isLoggedIn
+                        ? 'R\$ ${productsPrice.toStringAsFixed(2).replaceAll('.', ',')}'
+                        : "R\$ 0,00",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -57,7 +61,7 @@ class PriceCard extends StatelessWidget {
                 children: [
                   Text('Entrega/Frete'),
                   Text(
-                    'R\$ 5,99',
+                    userManager.isLoggedIn ? 'R\$ 5,99' : 'R\$ 0,00',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -72,7 +76,9 @@ class PriceCard extends StatelessWidget {
                 children: [
                   Text('Total'),
                   Text(
-                    'R\$ ${totalPriceTemp.toStringAsFixed(2).replaceAll('.', ',')}',
+                    userManager.isLoggedIn
+                        ? 'R\$ ${totalPriceTemp.toStringAsFixed(2).replaceAll('.', ',')}'
+                        : 'R\$ 0,00',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: primaryColor),
                   ),
@@ -87,13 +93,21 @@ class PriceCard extends StatelessWidget {
               child: RaisedButton.icon(
                 splashColor: Colors.blue,
                 elevation: 10,
-                color: primaryColor,
-                onPressed: onPressed,
+                color:
+                    userManager.isLoggedIn ? primaryColor : Colors.indigoAccent,
+                onPressed: userManager.isLoggedIn
+                    ? onPressed
+                    : () {
+                        Navigator.of(context).pushNamed('/login');
+                      },
                 disabledElevation: 10,
                 disabledColor: Colors.red.withAlpha(100),
                 disabledTextColor: Colors.black.withAlpha(100),
-                icon: icon,
-                label: Text(buttonText),
+                icon:
+                    userManager.isLoggedIn ? icon : Icon(Icons.alternate_email),
+                label: userManager.isLoggedIn
+                    ? Text(buttonText)
+                    : Text('Faça o login para comprar :))'),
                 textColor: Colors.white,
               ),
             ),

@@ -12,48 +12,54 @@ class _SplashScreenState extends State<SplashScreen>
   AnimationController controller;
   Animation<double> animation;
 
+  final sizeTween = Tween<double>(begin: 0, end: 400);
+  final opacityTween = Tween<double>(begin: 0.5, end: 1);
+
 //  String _anim = "carrinho";
   String _anim = "bonesSales";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-            child: Text(
-              "Boas compras",
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold,
-                fontSize: 36,
+      body: Opacity(
+        opacity: opacityTween.evaluate(animation),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+              child: Text(
+                "Boas compras",
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 36,
+                ),
               ),
             ),
-          ),
-          Container(
-            width: animation.value,
-            height: animation.value,
-            margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              //borderRadius: BorderRadius.all(Radius.circular(50)),
-              color: Colors.greenAccent,
+            Container(
+              width: sizeTween.evaluate(animation),
+              height: sizeTween.evaluate(animation),
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                //borderRadius: BorderRadius.all(Radius.circular(50)),
+                color: Colors.greenAccent,
 
-              shape: BoxShape.circle,
+                shape: BoxShape.circle,
+              ),
+              child: FlareActor(
+                "assets/bonesSales.flr",
+                animation: _anim,
+                alignment: Alignment.center,
+                fit: BoxFit.cover,
+              ),
             ),
-            child: FlareActor(
-              "assets/bonesSales.flr",
-              animation: _anim,
-              alignment: Alignment.center,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -75,10 +81,11 @@ class _SplashScreenState extends State<SplashScreen>
       duration: Duration(seconds: 1),
     );
 
-    animation = Tween<double>(begin: 50, end: 400).animate(controller)
-      ..addListener(() {
-        setState(() {});
-      });
+    animation =
+        CurvedAnimation(parent: controller, curve: Curves.linearToEaseOut)
+          ..addListener(() {
+            setState(() {});
+          });
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controller.reverse();
