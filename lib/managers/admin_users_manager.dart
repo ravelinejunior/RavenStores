@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faker/faker.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/user.dart';

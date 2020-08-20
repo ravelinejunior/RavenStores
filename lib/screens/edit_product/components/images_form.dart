@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/models/product.dart';
+import 'package:ravelinestores/screens/edit_product/components/image_source_sheet.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ImagesForm extends StatelessWidget {
@@ -19,7 +21,7 @@ class ImagesForm extends StatelessWidget {
             AspectRatio(
           aspectRatio: 1,
           child: Carousel(
-            images: state.value.map((image) {
+            images: state.value.map<Widget>((image) {
               return Stack(
                 fit: StackFit.expand,
                 children: [
@@ -88,7 +90,33 @@ class ImagesForm extends StatelessWidget {
                   ),
                 ],
               );
-            }).toList(),
+            }).toList()
+              ..add(
+                // adiciona outro widget
+                Material(
+                  color: Colors.grey[100],
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.add_a_photo,
+                      color: Colors.blue,
+                      size: 54,
+                    ),
+                    onPressed: () {
+                      //verificar se dispositivo é ios ou android
+                      if (Platform.isAndroid)
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => ImageSourceSheet(),
+                        );
+                      else
+                        showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) => ImageSourceSheet(),
+                        );
+                    },
+                  ),
+                ),
+              ),
             dotBgColor: Colors.transparent,
             dotIncreasedColor: primaryColor,
             dotColor: Colors.blueAccent,

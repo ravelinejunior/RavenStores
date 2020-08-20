@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ravelinestores</string>
+	<string>Comerciei</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -41,5 +41,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Acessar galeria para busca de imagens</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Acessar câmera para adição de imagem</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Acessar microfone para gravação de audio</string>
+
+
 </dict>
 </plist>

@@ -40,6 +40,7 @@ dependencies:
   flare_flutter: ^2.0.5
   alphabet_list_scroll_view: ^1.0.6
   faker: ^1.2.1
+  image_picker: ^0.6.7+4
 
 dev_dependencies:
   flutter_test:

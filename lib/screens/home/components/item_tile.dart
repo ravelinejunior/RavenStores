@@ -24,7 +24,8 @@ class ItemTile extends StatelessWidget {
         }
       },
       child: Card(
-        elevation: 8,
+        elevation: 15,
+        shadowColor: Colors.grey,
         child: FadeInImage.memoryNetwork(
           placeholder: kTransparentImage,
           image: item.image,
