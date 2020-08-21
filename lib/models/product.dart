@@ -53,4 +53,14 @@ class Product extends ChangeNotifier {
         )
         .toList();
   }
+
+  //preço base
+  num get basePrice {
+    //percorrer todos os tamanhos e retornar o valor menor
+    num lowest = double.infinity;
+    for (final size in sizesList) {
+      if (size.price < lowest && size.hasStock) lowest = size.price;
+    }
+    return lowest;
+  }
 }

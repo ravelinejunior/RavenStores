@@ -65,7 +65,7 @@ class ProductListTile extends StatelessWidget {
                     ),
 
                     Text(
-                      '19,99',
+                      'R\$ ${product.basePrice.toStringAsFixed(2)}',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,

@@ -1,9 +1,39 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ImageSourceSheet extends StatelessWidget {
+  ImageSourceSheet({this.onImageSelected});
+
+  final ImagePicker picker = ImagePicker();
+  final Function(File) onImageSelected;
+
+  //edição de imagem
+  Future<void> editImage(String path, BuildContext context) async {
+    final File croppedFile = await ImageCropper.cropImage(
+      sourcePath: path,
+      //aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Editar imagem',
+        toolbarColor: Colors.grey[700],
+        toolbarWidgetColor: Colors.white,
+        statusBarColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.grey[700],
+      ),
+      iosUiSettings: const IOSUiSettings(
+        title: 'Editar imagem',
+        cancelButtonTitle: 'Cancelar',
+        doneButtonTitle: 'Concluir',
+      ),
+    );
+
+    if (croppedFile != null) {
+      onImageSelected(croppedFile);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //verificar tipo de dispositivo
@@ -34,7 +64,12 @@ class ImageSourceSheet extends StatelessWidget {
               //botão de camera widget
               FlatButton.icon(
                 splashColor: Colors.indigo,
-                onPressed: () {},
+                onPressed: () async {
+                  final PickedFile file =
+                      await picker.getImage(source: ImageSource.camera);
+                  //recupera file e passa imagem como parametro
+                  editImage(file.path, context);
+                },
                 icon: Icon(
                   Icons.camera_enhance,
                   color: Colors.white,
@@ -49,7 +84,12 @@ class ImageSourceSheet extends StatelessWidget {
               //botão de galeria widget
               FlatButton.icon(
                 splashColor: Colors.indigoAccent,
-                onPressed: () {},
+                onPressed: () async {
+                  final PickedFile file =
+                      await picker.getImage(source: ImageSource.gallery);
+                  //recupera file
+                  editImage(file.path, context);
+                },
                 icon: Icon(
                   Icons.photo_library,
                   color: Colors.white,
