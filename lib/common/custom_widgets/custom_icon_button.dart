@@ -18,7 +18,7 @@ class CustomIconButton extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Icon(
               iconData,
-              color: color,
+              color: onTap != null ? color : Colors.blueGrey[100],
             ),
           ),
         ),

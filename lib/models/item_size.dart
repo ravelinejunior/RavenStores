@@ -6,6 +6,9 @@ class ItemSize {
     stock = map['stock'] as int;
   }
 
+  //construtor vazio
+  ItemSize();
+
   String name;
   num price;
   int stock;
@@ -15,7 +18,6 @@ class ItemSize {
 
   @override
   String toString() {
-    // TODO: implement toString
     return "Item size: name:$name\nprice: $price\nstock: $stock";
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ravelinestores/models/product.dart';
 
 import 'components/images_form.dart';
+import 'components/sizes_form.dart';
 
 class EditProductScreen extends StatelessWidget {
   final Product product;
@@ -48,6 +49,7 @@ class EditProductScreen extends StatelessWidget {
                     enableSuggestions: true,
                     decoration: InputDecoration(
                       hintText: 'Digite o título',
+                      labelText: 'Título',
                       hintStyle: TextStyle(
                           fontWeight: FontWeight.w400, color: Colors.grey),
                     ),
@@ -75,6 +77,7 @@ class EditProductScreen extends StatelessWidget {
                         color: color,
                         fontSize: 20.0),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0, bottom: 4.0),
                     child: Text(
@@ -89,11 +92,18 @@ class EditProductScreen extends StatelessWidget {
                       if (text.length < 10) return 'Mínimo de 10 caracteres';
                       return null;
                     },
+                    decoration: InputDecoration(
+                      labelText: 'Descrição',
+                      hintText: 'Digite sua descrição',
+                    ),
                     initialValue: product.description,
                     maxLines: null,
                     style:
                         TextStyle(fontStyle: FontStyle.italic, fontSize: 16.0),
                   ),
+
+                  //tamanhos custom widgets
+                  SizesForm(product: product),
 
                   Container(
                     margin: const EdgeInsets.only(top: 16),
