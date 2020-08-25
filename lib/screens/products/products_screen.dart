@@ -10,6 +10,7 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 46, 92, 138),
         //colocar consumer para verificar se usuario ja está pesquisando algo
         title: Consumer<ProductManager>(
           builder: (contextTitle, productManager, child) {
@@ -85,19 +86,32 @@ class ProductsScreen extends StatelessWidget {
       ),
       drawer: CustomDrawer(),
       //para carregar itens de maneira progressiva
-      body: Consumer<ProductManager>(
-        builder: (context, productManager, child) {
-          //para otimizar pesquisa
-          final filteredProducts = productManager.filteredProducts;
-          return ListView.builder(
-            padding: const EdgeInsets.all(4.0),
-            //especificar quantos itens o builder possui
-            itemCount: filteredProducts.length,
-            itemBuilder: (context, index) {
-              return ProductListTile(filteredProducts[index]);
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: const [
+                Color.fromARGB(255, 46, 92, 138),
+                Color.fromARGB(255, 95, 168, 211),
+                Color.fromARGB(255, 98, 182, 203),
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+            ),
+          ),
+          Consumer<ProductManager>(
+            builder: (context, productManager, child) {
+              //para otimizar pesquisa
+              final filteredProducts = productManager.filteredProducts;
+              return ListView.builder(
+                padding: const EdgeInsets.all(4.0),
+                //especificar quantos itens o builder possui
+                itemCount: filteredProducts.length,
+                itemBuilder: (context, index) {
+                  return ProductListTile(filteredProducts[index]);
+                },
+              );
             },
-          );
-        },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

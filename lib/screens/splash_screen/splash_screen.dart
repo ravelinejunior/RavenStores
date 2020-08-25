@@ -21,45 +21,58 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Opacity(
-        opacity: opacityTween.evaluate(animation),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-              child: Text(
-                "Boas compras",
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 36,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: const [
+                Color.fromARGB(255, 46, 92, 138),
+                Color.fromARGB(255, 95, 168, 211),
+                Color.fromARGB(255, 98, 182, 203),
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+            ),
+          ),
+          Opacity(
+            opacity: opacityTween.evaluate(animation),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+                  child: Text(
+                    "Boas compras",
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 36,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              width: sizeTween.evaluate(animation),
-              height: sizeTween.evaluate(animation),
-              margin: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                //borderRadius: BorderRadius.all(Radius.circular(50)),
-                color: Colors.greenAccent,
+                Container(
+                  width: sizeTween.evaluate(animation),
+                  height: sizeTween.evaluate(animation),
+                  margin: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    //borderRadius: BorderRadius.all(Radius.circular(50)),
+                    color: Colors.greenAccent,
 
-                shape: BoxShape.circle,
-              ),
-              child: FlareActor(
-                "assets/bonesSales.flr",
-                animation: _anim,
-                alignment: Alignment.center,
-                fit: BoxFit.cover,
-              ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: FlareActor(
+                    "assets/bonesSales.flr",
+                    animation: _anim,
+                    alignment: Alignment.center,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -11,35 +11,50 @@ class AdminUsersScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Usuários'),
         centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 46, 92, 138),
         elevation: 0,
       ),
       drawer: CustomDrawer(),
-      body: Consumer<AdminUsersManager>(
-        builder: (context, adminUsersManager, child) {
-          return AlphabetListScrollView(
-            showPreview: true,
-            highlightTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 26,
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: const [
+                Color.fromARGB(255, 46, 92, 138),
+                Color.fromARGB(255, 46, 92, 138),
+                Color.fromARGB(255, 46, 125, 168),
+                Color.fromARGB(255, 46, 125, 168),
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
             ),
-            strList: adminUsersManager.names, //lista de nomes
-            indexedHeight: (index) => 80,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  adminUsersManager.users[index].name,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          Consumer<AdminUsersManager>(
+            builder: (context, adminUsersManager, child) {
+              return AlphabetListScrollView(
+                showPreview: true,
+                highlightTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 26,
                 ),
-                subtitle: Text(
-                  adminUsersManager.users[index].email,
-                  style: TextStyle(
-                      color: Colors.white70, fontWeight: FontWeight.w700),
-                ),
+                strList: adminUsersManager.names, //lista de nomes
+                indexedHeight: (index) => 80,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      adminUsersManager.users[index].name,
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      adminUsersManager.users[index].email,
+                      style: TextStyle(
+                          color: Colors.white70, fontWeight: FontWeight.w700),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
+          ),
+        ],
       ),
     );
   }

@@ -11,28 +11,42 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Carrinho"),
         centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 46, 92, 138),
       ),
-      body: Consumer<CartManager>(
-        builder: (context, cartManager, child) {
-          return ListView(
-            children: [
-              Column(
-                //transformar os itens em uma lista e depois transformá-los em um cart tile customizável
-                children: cartManager.items
-                    .map((cartProduct) => CartTile(cartProduct))
-                    .toList(),
-              ),
-              //resumo pedido widget
-              PriceCard(
-                buttonText: 'Continuar para Entrega',
-                onPressed: cartManager.isCartValid ? () {} : null,
-                icon: cartManager.isCartValid
-                    ? Icon(Icons.add_shopping_cart)
-                    : Icon(Icons.remove_shopping_cart),
-              ),
-            ],
-          );
-        },
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: const [
+                Color.fromARGB(255, 46, 92, 138),
+                Color.fromARGB(255, 95, 168, 211),
+                Color.fromARGB(255, 98, 182, 203),
+              ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+            ),
+          ),
+          Consumer<CartManager>(
+            builder: (context, cartManager, child) {
+              return ListView(
+                children: [
+                  Column(
+                    //transformar os itens em uma lista e depois transformá-los em um cart tile customizável
+                    children: cartManager.items
+                        .map((cartProduct) => CartTile(cartProduct))
+                        .toList(),
+                  ),
+                  //resumo pedido widget
+                  PriceCard(
+                    buttonText: 'Continuar para Entrega',
+                    onPressed: cartManager.isCartValid ? () {} : null,
+                    icon: cartManager.isCartValid
+                        ? Icon(Icons.add_shopping_cart)
+                        : Icon(Icons.remove_shopping_cart),
+                  ),
+                ],
+              );
+            },
+          )
+        ],
       ),
     );
   }

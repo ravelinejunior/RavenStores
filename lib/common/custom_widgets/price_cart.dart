@@ -93,8 +93,9 @@ class PriceCard extends StatelessWidget {
               child: RaisedButton.icon(
                 splashColor: Colors.blue,
                 elevation: 10,
-                color:
-                    userManager.isLoggedIn ? primaryColor : Colors.indigoAccent,
+                color: userManager.isLoggedIn
+                    ? primaryColor
+                    : Color.fromARGB(255, 46, 125, 168),
                 onPressed: userManager.isLoggedIn
                     ? onPressed
                     : () {
