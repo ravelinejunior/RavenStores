@@ -37,7 +37,7 @@ class ProductManager extends ChangeNotifier {
   //lista de produtos
   List<Product> allProducts = [];
 
-  Future<void> _loadAllProducts() async {
+  Future<void> _loadProducts() async {
     //recuperar docs
     final QuerySnapshot querySnapshot =
         await firestore.collection("Products").getDocuments();
@@ -49,6 +49,25 @@ class ProductManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  //carregar todas as seções no firebase
+  Future<void> _loadAllProducts() async {
+    //fica lendo o banco constantemente para atualizações em tempo real
+    firestore.collection('Products').snapshots().listen((snapshot) {
+      //sempre que houver modificação na lista no firebase, limpar a lista antes de carrega-la
+      allProducts.clear();
+      //em cada documento
+      for (final DocumentSnapshot document in snapshot.documents) {
+        //transformar em um objeto seção
+        allProducts.add(Product.fromDocument(document));
+      }
+
+      //ordenar por nome
+      allProducts
+          .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      notifyListeners();
+    });
+  }
+
   //pesquisar produto por id
   Product findProductbyId(String id) {
     //procurar produto
@@ -58,5 +77,12 @@ class ProductManager extends ChangeNotifier {
       //caso produto nao seja encontrado
       return null;
     }
+  }
+
+  //atualizar lista de produtos
+  void update(Product product) {
+    allProducts.removeWhere((p) => p.id == product.id);
+    allProducts.add(product);
+    notifyListeners();
   }
 }

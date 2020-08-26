@@ -35,7 +35,7 @@ class ProductListTile extends StatelessWidget {
 
               FadeInImage.memoryNetwork(
                 placeholder: kTransparentImage,
-                image: product.images.first,
+                image: product.images.first.toString(),
                 fit: BoxFit.fill,
                 height: 120,
                 width: 120,

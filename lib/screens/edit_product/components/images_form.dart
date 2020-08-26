@@ -13,15 +13,17 @@ class ImagesForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    return FormField<List>(
+    return FormField<List<dynamic>>(
+      //passar imagens iniciais
+      //initialValue: product.images,
+      initialValue: List.from(product.images),
       //validar campo de imagens, caso não exista imagens, invalidar processo
       validator: (images) {
         if (images.isEmpty) return 'Insira ao menos uma foto';
         return null;
       },
-      autovalidate: true, //valida automaticamente
-      //passar imagens iniciais
-      initialValue: List.from(product.images),
+      //salvar a lista de imagens
+      onSaved: (images) => product.newImages = images,
       builder: (state) {
         void onItemSelected(File file) {
           //add o file ao state

@@ -7,7 +7,7 @@ class ItemSize {
   }
 
   //construtor vazio
-  ItemSize();
+  ItemSize({this.name, this.price, this.stock});
 
   String name;
   num price;
@@ -19,5 +19,23 @@ class ItemSize {
   @override
   String toString() {
     return "Item size: name:$name\nprice: $price\nstock: $stock";
+  }
+
+  //clonagem
+  ItemSize clone() {
+    return ItemSize(
+      name: name,
+      price: price,
+      stock: stock,
+    );
+  }
+
+  //função de conversão de lista para map
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'price': price,
+      'stock': stock,
+    };
   }
 }

@@ -57,7 +57,7 @@ class ProductScreen extends StatelessWidget {
               aspectRatio: 1,
               child: Carousel(
                 images: product.images.map((url) {
-                  return NetworkImage(url);
+                  return NetworkImage(url.toString());
                 }).toList(),
                 dotBgColor: Colors.transparent,
                 dotIncreasedColor: primaryColor,

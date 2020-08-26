@@ -14,7 +14,7 @@ class SizesForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FormField<List<ItemSize>>(
-          initialValue: List.from(product.sizesList),
+          initialValue: product.sizesList,
           validator: (sizes) {
             //validator recebe a lista de tamanhos
             if (sizes.isEmpty)

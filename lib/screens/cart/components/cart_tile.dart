@@ -23,7 +23,7 @@ class CartTile extends StatelessWidget {
               //imagem
               FadeInImage.memoryNetwork(
                 placeholder: kTransparentImage,
-                image: cartProduct.product.images.first,
+                image: cartProduct.product.images.first.toString(),
                 fit: BoxFit.cover,
                 height: 80,
                 width: 80,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
 import 'package:ravelinestores/managers/product_manager.dart';
+import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/screens/products/components/product_list_tile.dart';
 import 'package:ravelinestores/screens/products/components/search_dialog.dart';
 
@@ -77,10 +78,23 @@ class ProductsScreen extends StatelessWidget {
             },
           ),
 
-          //icone de adicionar produto (ADM)
-          IconButton(
-            icon: Icon(Icons.add, color: Colors.white),
-            onPressed: () {},
+          //widget editar
+          Consumer<UserManager>(
+            builder: (context, userManager, child) {
+              //ENVIA PARA EDIÇÃO DE PRODUTO
+              if (userManager.adminEnabled)
+                return IconButton(
+                  icon: Icon(Icons.add, color: Colors.white),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      '/editProduct',
+                    );
+                  },
+                  splashColor: Colors.orange,
+                );
+              else
+                return Container();
+            },
           ),
         ],
       ),
