@@ -10,7 +10,7 @@ class SectionHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Text(
-        section.name,
+        section.name ?? 'Clicado ',
         style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
       ),

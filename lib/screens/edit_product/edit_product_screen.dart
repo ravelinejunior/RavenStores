@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/models/product.dart';
 
 import 'components/images_form.dart';

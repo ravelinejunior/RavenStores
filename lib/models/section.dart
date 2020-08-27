@@ -7,6 +7,10 @@ class Section {
   String type;
   List<SectionItem> items;
 
+  Section({this.name, this.type, this.items}) {
+    items = items ?? [];
+  }
+
   //transformar objetos do banco em objeto section
   Section.fromDocument(DocumentSnapshot documentSnapshot) {
     //id = documentSnapshot.documentID;
@@ -20,5 +24,14 @@ class Section {
   @override
   String toString() {
     return 'Section{ name: $name\ntype: $type\nitems: $items}';
+  }
+
+  //clone
+  Section clone() {
+    return Section(
+      name: name,
+      type: type,
+      items: items.map((e) => e.clone()).toList(),
+    );
   }
 }
