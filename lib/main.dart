@@ -12,6 +12,7 @@ import 'package:ravelinestores/screens/edit_product/edit_product_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
 import 'package:ravelinestores/screens/product_screen/product_screen.dart';
 import 'package:ravelinestores/screens/products/products_screen.dart';
+import 'package:ravelinestores/screens/selected_product/selected_product.dart';
 import 'package:ravelinestores/screens/signup/signup_screen.dart';
 import 'package:ravelinestores/screens/splash_screen/splash_screen.dart';
 
@@ -82,6 +83,10 @@ class MyApp extends StatelessWidget {
                 builder: (_) => ProductScreen(settings.arguments as Product),
               );
 
+            case '/selectedProduct':
+              return MaterialPageRoute(
+                builder: (_) => SelectedProduct(),
+              );
             case '/cart':
               return MaterialPageRoute(
                 builder: (_) => CartScreen(),

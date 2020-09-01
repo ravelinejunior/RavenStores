@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:ravelinestores/models/section_item.dart';
 
-class Section {
+class Section extends ChangeNotifier {
   String id;
   String name;
   String type;
@@ -33,5 +34,17 @@ class Section {
       type: type,
       items: items.map((e) => e.clone()).toList(),
     );
+  }
+
+  // adicionar section a tela principal
+  void addItem(SectionItem item) {
+    items.add(item);
+    notifyListeners();
+  }
+
+  // remover section a tela principal
+  void removeItem(SectionItem item) {
+    items.remove(item);
+    notifyListeners();
   }
 }
