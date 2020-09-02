@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:ravelinestores/models/section.dart';
 import 'package:provider/provider.dart';
@@ -54,26 +54,6 @@ class AddTileWidget extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  //edição de imagem
-  Future<void> editImage(String path, BuildContext context) async {
-    final File croppedFile = await ImageCropper.cropImage(
-      sourcePath: path,
-      //aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-      androidUiSettings: AndroidUiSettings(
-        toolbarTitle: 'Editar imagem',
-        toolbarColor: Colors.grey[700],
-        toolbarWidgetColor: Colors.white,
-        statusBarColor: Theme.of(context).primaryColor,
-        backgroundColor: Colors.grey[700],
-      ),
-      iosUiSettings: const IOSUiSettings(
-        title: 'Editar imagem',
-        cancelButtonTitle: 'Cancelar',
-        doneButtonTitle: 'Concluir',
       ),
     );
   }

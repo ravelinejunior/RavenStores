@@ -4,7 +4,7 @@ import 'package:ravelinestores/models/section.dart';
 
 class HomeManager extends ChangeNotifier {
   final Firestore firestore = Firestore.instance;
-  List<Section> _sections = [];
+  final List<Section> _sections = [];
   bool editing = false;
   List<Section> _editingSections = [];
 
@@ -43,7 +43,24 @@ class HomeManager extends ChangeNotifier {
   }
 
   //salvar edição
-  void saveEditing() {
+  Future<void> saveEditing() async {
+    /*
+      passar por todas as seções e chamar a função valid
+
+      caso algum dos campos nao seja valido, setar variavel valid como false
+      */
+    //verificar se todos os dados são validos
+    bool valid = true;
+    for (final section in _editingSections) {
+      if (!section.valid()) valid = false;
+    }
+
+    if (!valid) return;
+
+    //percorre as seções e salva no banco
+    for (final section in _editingSections) {
+      await section.save();
+    }
     editing = false;
     notifyListeners();
   }

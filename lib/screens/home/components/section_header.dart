@@ -11,38 +11,53 @@ class SectionHeader extends StatelessWidget {
     final section = context.watch<Section>();
 //edição dos nomes das seções
     if (homeManager.editing) {
-      return Row(
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: TextFormField(
-              initialValue: section.name,
-              decoration: const InputDecoration(
-                labelStyle: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  initialValue: section.name,
+                  decoration: const InputDecoration(
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    labelText: 'Título',
+                    alignLabelWithHint: true,
+                    contentPadding: const EdgeInsets.all(8),
+                    isDense: true,
+                  ),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 18),
+                  //salvar
+                  onChanged: (value) => section.name = value,
                 ),
-                labelText: 'Título',
-                alignLabelWithHint: true,
-                contentPadding: const EdgeInsets.all(8),
-                isDense: true,
               ),
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18),
-              //salvar
-              onChanged: (value) => section.name = value,
-            ),
-          ),
 
-          //remover icon
-          CustomIconButton(
-            iconData: Icons.remove,
-            onTap: () {
-              homeManager.removeSection(section);
-            },
+              //remover icon
+              CustomIconButton(
+                iconData: Icons.remove,
+                onTap: () {
+                  homeManager.removeSection(section);
+                },
+              ),
+            ],
           ),
+          //verificar se existe erro
+          if (section.error != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0, top: 16),
+              child: Text(
+                section.error,
+                style: const TextStyle(
+                    color: Colors.red, fontWeight: FontWeight.bold),
+              ),
+            ),
         ],
       );
     } else {

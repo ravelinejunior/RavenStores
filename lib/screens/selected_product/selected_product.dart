@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/managers/product_manager.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class SelectedProduct extends StatelessWidget {
   @override
@@ -23,12 +22,10 @@ class SelectedProduct extends StatelessWidget {
                 elevation: 5,
                 child: ListTile(
                   leading: FadeInImage.assetNetwork(
-                    alignment: Alignment.center,
+                    width: 100,
                     placeholder: 'assets/discuss.gif',
                     image: product.images.first as String,
                     fit: BoxFit.fill,
-                    width: 125,
-                    height: 150,
                   ),
                   title: Text(
                     '${product.name}',
