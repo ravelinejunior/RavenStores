@@ -19,6 +19,7 @@ class SectionHeader extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   initialValue: section.name,
+                  autofocus: false,
                   decoration: const InputDecoration(
                     labelStyle: TextStyle(
                       color: Colors.white,

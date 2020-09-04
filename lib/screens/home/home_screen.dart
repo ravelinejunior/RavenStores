@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                   //edição de tela de principal
                   Consumer2<UserManager, HomeManager>(
                     builder: (context, userManager, homeManager, child) {
-                      if (userManager.adminEnabled) {
+                      if (userManager.adminEnabled && !homeManager.loading) {
                         if (homeManager.editing) {
                           //entra no modo edição
                           return PopupMenuButton(
@@ -87,6 +87,20 @@ class HomeScreen extends StatelessWidget {
               //transforma widgets em widgets slivers
               Consumer<HomeManager>(
                 builder: (context, homeManager, child) {
+                  /* 
+                      Verificar se tela está carregando ou nao 
+                     */
+
+                  if (homeManager.loading) {
+                    return SliverToBoxAdapter(
+                      child: const LinearProgressIndicator(
+                        valueColor:
+                            const AlwaysStoppedAnimation<Color>(Colors.white),
+                        backgroundColor: Colors.transparent,
+                      ),
+                    );
+                  }
+
                   //definir uma lista dos filhos, transformar cada seção em um child
                   final List<Widget> children =
                       homeManager.sections.map<Widget>(

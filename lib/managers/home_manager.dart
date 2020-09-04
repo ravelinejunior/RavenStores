@@ -7,6 +7,7 @@ class HomeManager extends ChangeNotifier {
   final List<Section> _sections = [];
   bool editing = false;
   List<Section> _editingSections = [];
+  bool loading = false;
 
   HomeManager() {
     _loadSections();
@@ -15,7 +16,7 @@ class HomeManager extends ChangeNotifier {
   //carregar todas as seções no firebase
   Future<void> _loadSections() async {
     //fica lendo o banco constantemente para atualizações em tempo real
-    firestore.collection('Home').snapshots().listen((snapshot) {
+    firestore.collection('Home').orderBy('pos').snapshots().listen((snapshot) {
       //sempre que houver modificação na lista no firebase, limpar a lista antes de carrega-la
       _sections.clear();
       //em cada documento
@@ -56,12 +57,31 @@ class HomeManager extends ChangeNotifier {
     }
 
     if (!valid) return;
+    loading = true;
+    notifyListeners();
 
-    //percorre as seções e salva no banco
+    //percorre as seções e salva no banco e salvar posicao desejada
+    int pos = 0;
     for (final section in _editingSections) {
-      await section.save();
+      await section.save(pos);
+      pos++;
     }
+
+    /* 
+      verificar se seção ainda existe ou se foi excluida
+      percorrer todas as seções apos o salvamento
+      verificar secção por id
+      caso nao contenha, significa que seção foi removida
+     */
+
+    for (final section in List.from(_sections)) {
+      if (!_editingSections.any((element) => element.id == section.id)) {
+        await section.delete();
+      }
+    }
+
     editing = false;
+    loading = false;
     notifyListeners();
   }
 

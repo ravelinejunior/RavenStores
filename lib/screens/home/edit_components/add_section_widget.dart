@@ -17,6 +17,7 @@ class AddSectionWidget extends StatelessWidget {
               splashColor: Colors.white54,
               onPressed: () {
                 homeManager.addSection(Section(type: 'list'));
+                FocusScope.of(context).requestFocus(FocusNode());
               },
               icon: const Icon(Icons.list, color: Colors.white),
               textColor: Colors.white,
@@ -37,6 +38,7 @@ class AddSectionWidget extends StatelessWidget {
               splashColor: Colors.lightBlue,
               onPressed: () {
                 homeManager.addSection(Section(type: 'staggered'));
+                FocusScope.of(context).requestFocus(FocusNode());
               },
               icon: const Icon(Icons.line_style, color: Colors.white),
               textColor: Colors.white,

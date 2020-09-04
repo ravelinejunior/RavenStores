@@ -83,7 +83,7 @@ class Section extends ChangeNotifier {
   }
 
   //salvar seções no banco de dados
-  Future<void> save() async {
+  Future<void> save(int pos) async {
     /* 
     1 -- criar mapa a ser enviado no bd
     2 -- verificar se seção ja existe ou se é uma nova section
@@ -97,6 +97,7 @@ class Section extends ChangeNotifier {
     final Map<String, dynamic> data = {
       'name': name,
       'type': type,
+      'pos': pos,
     };
 
     if (id == null) {
@@ -138,5 +139,24 @@ class Section extends ChangeNotifier {
       'items': items.map((e) => e.toMap()).toList()
     };
     await firestoreRef.updateData(itemsData);
+  }
+
+  //deletar seção
+  Future<void> delete() async {
+    /* 
+      deletar do firestore e do firestorage 
+      deletar cada imagem que estava salva no storage 
+
+     */
+    await firestoreRef.delete();
+    for (final item in items) {
+      try {
+        final ref = await storage.getReferenceFromUrl(item.image as String);
+        await ref.delete();
+      } catch (e) {
+        debugPrint(
+            'Imagem não deletada pois não está armazenada em nosso servidor');
+      }
+    }
   }
 }
