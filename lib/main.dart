@@ -6,6 +6,7 @@ import 'package:ravelinestores/managers/home_manager.dart';
 import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/product.dart';
+import 'package:ravelinestores/screens/address/address_screen.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/cart/cart_screen.dart';
 import 'package:ravelinestores/screens/edit_product/edit_product_screen.dart';
@@ -90,6 +91,11 @@ class MyApp extends StatelessWidget {
             case '/cart':
               return MaterialPageRoute(
                 builder: (_) => CartScreen(),
+              );
+
+            case '/address':
+              return MaterialPageRoute(
+                builder: (_) => AddressScreen(),
               );
 
             case '/editProduct':

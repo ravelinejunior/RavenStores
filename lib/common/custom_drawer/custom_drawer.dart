@@ -55,7 +55,6 @@ class CustomDrawer extends StatelessWidget {
                   }
                 },
               ),
-              //TODO 4: FOOTER
             ],
           ),
         ],

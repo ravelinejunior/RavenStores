@@ -2,14 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
+import 'package:ravelinestores/models/address.dart';
 import 'package:ravelinestores/models/cart_products.dart';
 import 'package:ravelinestores/models/product.dart';
 import 'package:ravelinestores/models/user.dart';
+import 'package:ravelinestores/services/cep_aberto_service.dart';
 
 class CartManager extends ChangeNotifier {
   List<CartProduct> items = [];
   User user;
   num productsPrice = 0;
+  Address address;
 
   //ADD PRODUCTS
   void addToCart(Product product) {
@@ -107,5 +110,33 @@ class CartManager extends ChangeNotifier {
     }
 
     return true;
+  }
+
+  //ADDRESSES
+  Future<void> getAddress(String cep) async {
+    /* 
+    1 -- recuperar o service com o cep digitado
+     */
+
+    final cepService = CepAbertoService();
+    try {
+      final cepAdress = await cepService.getAddressFromCep(cep);
+      if (cepAdress != null) {
+        address = Address(
+          street: cepAdress.logradouro,
+          disctrict: cepAdress.bairro,
+          zipCode: cepAdress.cep,
+          city: cepAdress.cidade.nome,
+          state: cepAdress.estado.sigla,
+          complement: cepAdress.complemento,
+          lat: cepAdress.latitude,
+          long: cepAdress.longitude,
+          alt: cepAdress.altitude,
+        );
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }
