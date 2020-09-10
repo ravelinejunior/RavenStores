@@ -36,16 +36,18 @@ class CartScreen extends StatelessWidget {
                   ),
                   //resumo pedido widget
                   PriceCard(
-                    buttonText: 'Continuar para Entrega',
-                    onPressed: cartManager.isCartValid
-                        ? () {
-                            Navigator.of(context).pushNamed('/address');
-                          }
-                        : null,
-                    icon: cartManager.isCartValid
-                        ? Icon(Icons.add_shopping_cart)
-                        : Icon(Icons.remove_shopping_cart),
-                  ),
+                      buttonText: 'Continuar para Entrega',
+                      onPressed: cartManager.isCartValid
+                          ? () {
+                              Navigator.of(context).pushNamed('/address');
+                            }
+                          : null,
+                      icon: cartManager.isCartValid
+                          ? Icon(Icons.add_shopping_cart)
+                          : Icon(Icons.remove_shopping_cart),
+                      color: cartManager.isCartValid
+                          ? Color.fromARGB(255, 46, 125, 168)
+                          : Colors.redAccent.withAlpha(100)),
                 ],
               );
             },

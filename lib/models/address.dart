@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class Address {
   Address({
     this.alt,
@@ -17,7 +15,6 @@ class Address {
   double alt;
   double lat;
   double long;
-
   String zipCode;
   String complement;
   String disctrict;

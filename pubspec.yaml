@@ -45,6 +45,8 @@ dependencies:
   uuid: ^2.2.0
   dio: ^3.0.10
   brasil_fields: ^0.4.0
+  geolocator: ^5.3.1
+
 
 dev_dependencies:
   flutter_test:

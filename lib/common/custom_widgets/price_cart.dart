@@ -5,11 +5,12 @@ import 'package:ravelinestores/managers/user_manager.dart';
 
 class PriceCard extends StatelessWidget {
   //construtor
-  PriceCard({this.buttonText, this.onPressed, this.icon});
+  PriceCard({this.buttonText, this.onPressed, this.icon, this.color});
 
   final String buttonText;
   final VoidCallback onPressed;
   final Icon icon;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +19,9 @@ class PriceCard extends StatelessWidget {
     //toda vez que houver alteração no cartManager, ele rebuilda a tela
     final cartManager = context.watch<CartManager>();
     final productsPrice = cartManager.productsPrice;
-    final totalPriceTemp = productsPrice + 5.99;
+    final totalPriceTemp = cartManager.totalPrice;
     final userManager = context.watch<UserManager>();
+    final deliveryPrice = cartManager.deliveryPrice;
 
     return Card(
       elevation: 10,
@@ -61,7 +63,9 @@ class PriceCard extends StatelessWidget {
                 children: [
                   Text('Entrega/Frete'),
                   Text(
-                    userManager.isLoggedIn ? 'R\$ 5,99' : 'R\$ 0,00',
+                    userManager.isLoggedIn && deliveryPrice != null
+                        ? 'R\$ ${deliveryPrice.toStringAsFixed(2).replaceAll('.', ',')}'
+                        : 'R\$ 0,00',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -77,7 +81,7 @@ class PriceCard extends StatelessWidget {
                   Text('Total'),
                   Text(
                     userManager.isLoggedIn
-                        ? 'R\$ ${totalPriceTemp.toStringAsFixed(2).replaceAll('.', ',')}'
+                        ? 'R\$ ${(totalPriceTemp).toStringAsFixed(2).replaceAll('.', ',')}'
                         : 'R\$ 0,00',
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: primaryColor),
@@ -91,10 +95,11 @@ class PriceCard extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 16),
               height: 50,
               child: RaisedButton.icon(
+                shape: const StadiumBorder(),
                 splashColor: Colors.blue,
                 elevation: 10,
                 color: userManager.isLoggedIn
-                    ? primaryColor
+                    ? color
                     : Color.fromARGB(255, 46, 125, 168),
                 onPressed: userManager.isLoggedIn
                     ? onPressed
@@ -102,13 +107,13 @@ class PriceCard extends StatelessWidget {
                         Navigator.of(context).pushNamed('/login');
                       },
                 disabledElevation: 10,
-                disabledColor: Colors.red.withAlpha(100),
+                disabledColor: color.withAlpha(100),
                 disabledTextColor: Colors.black.withAlpha(100),
                 icon:
                     userManager.isLoggedIn ? icon : Icon(Icons.alternate_email),
                 label: userManager.isLoggedIn
                     ? Text(buttonText)
-                    : Text('Faça o login para comprar :))'),
+                    : Text('Faça o login para comprar!'),
                 textColor: Colors.white,
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/address.dart';
 import 'package:ravelinestores/models/cart_products.dart';
@@ -12,7 +13,11 @@ class CartManager extends ChangeNotifier {
   List<CartProduct> items = [];
   User user;
   num productsPrice = 0;
+  num deliveryPrice;
   Address address;
+  Firestore _firestore = Firestore.instance;
+
+  num get totalPrice => productsPrice + (deliveryPrice ?? 0);
 
   //ADD PRODUCTS
   void addToCart(Product product) {
@@ -137,6 +142,62 @@ class CartManager extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint(e.toString());
+      return Future.error("Favor, digitar um cep válido!");
     }
   }
+
+  //remover o address e avisar o listener que ele ficou nulo
+  void removeAddress() {
+    address = null;
+    deliveryPrice = null;
+    notifyListeners();
+  }
+
+  //salvar address e calcular distancia
+  Future<void> setAddress(Address address) async {
+    /* 
+     1 -  salvar address passado no address geral
+     2 - passar address para o calculo de delivery
+     */
+    this.address = address;
+    if (await calculateDelivery(address.lat, address.long)) {
+      notifyListeners();
+    } else {
+      return Future.error("Endereço fora do raio de entrega :(");
+    }
+  }
+
+  //função de calculo de frete
+  Future<bool> calculateDelivery(double lat, double long) async {
+    /* 
+      verificar ponto de referencia inicial, buscado do firebase, da loja no caso
+      buscar long e lat da collection aux criada
+      converter distancia de metros em km
+      calculo de preço delivery sera feito : calc = preço fixo firebase + distancia * 50cents
+
+     */
+
+    final DocumentSnapshot doc =
+        await _firestore.document('Aux/delivery').get();
+    final latStore = doc.data['lat'] as double;
+    final longStore = doc.data['long'] as double;
+    final maxKm = doc.data['maxKm'] as num;
+    final kmPrice = doc.data['km'] as num;
+    final base = doc.data['base'] as num;
+
+    double dis =
+        await Geolocator().distanceBetween(latStore, longStore, lat, long);
+
+    dis /= 1000.0;
+
+    if (dis <= maxKm) {
+      deliveryPrice = base + (dis * kmPrice);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //verificar se address é valido e frete foi calculado com sucesso
+  bool get isAddressValid => address != null && deliveryPrice != null;
 }
