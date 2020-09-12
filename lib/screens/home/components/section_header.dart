@@ -46,6 +46,7 @@ class SectionHeader extends StatelessWidget {
                 onTap: () {
                   homeManager.removeSection(section);
                 },
+                color: Colors.red,
               ),
             ],
           ),

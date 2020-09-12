@@ -17,6 +17,14 @@ class CartManager extends ChangeNotifier {
   Address address;
   Firestore _firestore = Firestore.instance;
 
+  //carregamento get - set
+  bool _loading = false;
+  bool get loading => _loading;
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   num get totalPrice => productsPrice + (deliveryPrice ?? 0);
 
   //ADD PRODUCTS
@@ -87,11 +95,25 @@ class CartManager extends ChangeNotifier {
   //update user
   void updateUser(UserManager userManager) {
     user = userManager.user;
+    productsPrice = 0.0;
     items.clear();
+    removeAddress();
 
     if (user != null) {
       //carregar carrinho do usuario
       _loadCartItems();
+      //carregar endereço do usuario
+      _loadUserAddress();
+    }
+  }
+
+  //recuperar valores do address
+  Future<void> _loadUserAddress() async {
+    //verifica se é nulo e ja calcula raio de entrega
+    if (user.address != null &&
+        await calculateDelivery(user.address.lat, user.address.long)) {
+      this.address = user.address;
+      notifyListeners();
     }
   }
 
@@ -123,13 +145,15 @@ class CartManager extends ChangeNotifier {
     1 -- recuperar o service com o cep digitado
      */
 
+    loading = true;
+
     final cepService = CepAbertoService();
     try {
       final cepAdress = await cepService.getAddressFromCep(cep);
       if (cepAdress != null) {
         address = Address(
           street: cepAdress.logradouro,
-          disctrict: cepAdress.bairro,
+          district: cepAdress.bairro,
           zipCode: cepAdress.cep,
           city: cepAdress.cidade.nome,
           state: cepAdress.estado.sigla,
@@ -138,12 +162,15 @@ class CartManager extends ChangeNotifier {
           long: cepAdress.longitude,
           alt: cepAdress.altitude,
         );
-        notifyListeners();
+        //notifyListeners();
       }
     } catch (e) {
       debugPrint(e.toString());
+      loading = false;
       return Future.error("Favor, digitar um cep válido!");
     }
+
+    loading = false;
   }
 
   //remover o address e avisar o listener que ele ficou nulo
@@ -155,14 +182,18 @@ class CartManager extends ChangeNotifier {
 
   //salvar address e calcular distancia
   Future<void> setAddress(Address address) async {
+    loading = true;
     /* 
      1 -  salvar address passado no address geral
      2 - passar address para o calculo de delivery
      */
     this.address = address;
     if (await calculateDelivery(address.lat, address.long)) {
-      notifyListeners();
+      user.setAddress(address);
+      //notifyListeners();
+      loading = false;
     } else {
+      loading = false;
       return Future.error("Endereço fora do raio de entrega :(");
     }
   }

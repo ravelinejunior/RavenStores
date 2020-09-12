@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ravelinestores/common/custom_widgets/empty_card.dart';
+import 'package:ravelinestores/common/custom_widgets/login_card.dart';
 import 'package:ravelinestores/common/custom_widgets/price_cart.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/screens/cart/components/cart_tile.dart';
@@ -26,30 +28,39 @@ class CartScreen extends StatelessWidget {
           ),
           Consumer<CartManager>(
             builder: (context, cartManager, child) {
-              return ListView(
-                children: [
-                  Column(
-                    //transformar os itens em uma lista e depois transformá-los em um cart tile customizável
-                    children: cartManager.items
-                        .map((cartProduct) => CartTile(cartProduct))
-                        .toList(),
-                  ),
-                  //resumo pedido widget
-                  PriceCard(
-                      buttonText: 'Continuar para Entrega',
-                      onPressed: cartManager.isCartValid
-                          ? () {
-                              Navigator.of(context).pushNamed('/address');
-                            }
-                          : null,
-                      icon: cartManager.isCartValid
-                          ? Icon(Icons.add_shopping_cart)
-                          : Icon(Icons.remove_shopping_cart),
-                      color: cartManager.isCartValid
-                          ? Color.fromARGB(255, 46, 125, 168)
-                          : Colors.redAccent.withAlpha(100)),
-                ],
-              );
+              if (cartManager.user != null && cartManager.items.isNotEmpty)
+                return ListView(
+                  children: [
+                    Column(
+                      //transformar os itens em uma lista e depois transformá-los em um cart tile customizável
+                      children: cartManager.items
+                          .map((cartProduct) => CartTile(cartProduct))
+                          .toList(),
+                    ),
+                    //resumo pedido widget
+                    PriceCard(
+                        buttonText: 'Continuar para Entrega',
+                        onPressed: cartManager.isCartValid
+                            ? () {
+                                Navigator.of(context).pushNamed('/address');
+                              }
+                            : null,
+                        icon: cartManager.isCartValid
+                            ? Icon(Icons.add_shopping_cart)
+                            : Icon(Icons.remove_shopping_cart),
+                        color: cartManager.isCartValid
+                            ? Color.fromARGB(255, 46, 125, 168)
+                            : Colors.redAccent.withAlpha(100)),
+                  ],
+                );
+              else if (cartManager.user != null && cartManager.items.isEmpty)
+                return EmptyCard(
+                  iconData: Icons.remove_shopping_cart,
+                  title:
+                      "Você ainda não adicionou nenhum produto no carrinho. Que tal fazer umas comprinhas ?!",
+                );
+              else
+                return LoginCard();
             },
           )
         ],

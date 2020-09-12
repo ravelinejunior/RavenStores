@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ravelinestores/models/address.dart';
 
 class User {
   //construtor
@@ -12,6 +13,10 @@ class User {
     name = documentSnapshot.data['name'] as String;
     email = documentSnapshot.data['email'] as String;
     id = documentSnapshot.documentID;
+    if (documentSnapshot.data.containsKey('address')) {
+      address = Address.fromMap(
+          documentSnapshot.data['address'] as Map<String, dynamic>);
+    }
   }
 
   Firestore data = Firestore.instance;
@@ -22,6 +27,7 @@ class User {
   String name;
   String passConf;
   bool admin = false;
+  Address address;
 
   //criar referencia ao no de usuario
   DocumentReference get firestoreRef => data.document('Users/$id');
@@ -35,6 +41,13 @@ class User {
     return {
       'name': name,
       'email': email,
+      if (address != null) 'address': address.toMap(),
     };
+  }
+
+  //função para salvar novo endereço por usuario
+  Future<void> setAddress(Address address) async {
+    this.address = address;
+    saveData();
   }
 }

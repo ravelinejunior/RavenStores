@@ -46,6 +46,7 @@ dependencies:
   dio: ^3.0.10
   brasil_fields: ^0.4.0
   geolocator: ^5.3.1
+  shimmer: ^1.1.1
 
 
 dev_dependencies:

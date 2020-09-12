@@ -65,14 +65,14 @@ class AddressInputField extends StatelessWidget {
             ],
           ),
           TextFormField(
-            initialValue: address.disctrict,
+            initialValue: address.district,
             decoration: const InputDecoration(
               isDense: true,
               labelText: "Bairro",
               hintText: "Ex:Betânia",
             ),
             validator: emptyValidator,
-            onSaved: (text) => address.disctrict = text,
+            onSaved: (text) => address.district = text,
           ),
 
           Row(
@@ -118,44 +118,55 @@ class AddressInputField extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Container(
-            height: 56,
-            child: RaisedButton.icon(
-              onPressed: () async {
-                if (Form.of(context).validate()) {
-                  Form.of(context).save();
-                  try {
-                    await context.read<CartManager>().setAddress(address);
-                  } catch (e) {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        elevation: 10,
-                        content: Card(
-                          elevation: 0,
-                          color: Colors.red,
-                          margin: const EdgeInsets.all(8),
-                          child: Text('$e'),
-                        ),
-                        backgroundColor: Colors.red,
-                        duration: const Duration(seconds: 3),
-                        behavior: SnackBarBehavior.floating,
-                      ),
-                    );
-                  }
-                }
-              },
-              icon: Icon(Icons.attach_money),
-              label: const Text(
-                'Calcular Frete',
-                style: const TextStyle(fontSize: 16),
-              ),
-              splashColor: Colors.lightBlue,
-              textColor: Colors.white,
-              shape: StadiumBorder(),
-              color: colorButton,
-              elevation: 10,
-              disabledColor: colorButton.withAlpha(100),
-            ),
+          Consumer<CartManager>(
+            builder: (contextOut, cartManager, childOut) {
+              if (!cartManager.loading)
+                return Container(
+                  height: 56,
+                  child: RaisedButton.icon(
+                    onPressed: () async {
+                      if (Form.of(context).validate()) {
+                        Form.of(context).save();
+                        try {
+                          await context.read<CartManager>().setAddress(address);
+                        } catch (e) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              elevation: 10,
+                              content: Card(
+                                elevation: 0,
+                                color: Colors.red,
+                                margin: const EdgeInsets.all(8),
+                                child: Text('$e'),
+                              ),
+                              backgroundColor: Colors.red,
+                              duration: const Duration(seconds: 3),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    icon: Icon(Icons.attach_money),
+                    label: const Text(
+                      'Calcular Frete',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    splashColor: Colors.lightBlue,
+                    textColor: Colors.white,
+                    shape: StadiumBorder(),
+                    color: colorButton,
+                    elevation: 10,
+                    disabledColor: colorButton.withAlpha(100),
+                  ),
+                );
+              else
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(colorButton),
+                  ),
+                );
+            },
           ),
         ],
       );
@@ -167,7 +178,7 @@ class AddressInputField extends StatelessWidget {
             color: Colors.grey[400],
           ),
           Text(
-            "${address.street}, ${address.number}\n${address.disctrict}\n${address.city}-${address.state}",
+            "${address.street}, ${address.number}\n${address.district}\n${address.city}-${address.state}",
             style: TextStyle(
               fontWeight: FontWeight.w800,
             ),
