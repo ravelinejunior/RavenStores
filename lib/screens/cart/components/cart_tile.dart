@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_widgets/custom_icon_button.dart';
 import 'package:ravelinestores/models/cart_products.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class CartTile extends StatelessWidget {
   final CartProduct cartProduct;
@@ -21,8 +20,8 @@ class CartTile extends StatelessWidget {
           child: Row(
             children: [
               //imagem
-              FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
+              FadeInImage.assetNetwork(
+                placeholder: 'assets/cartshop.gif',
                 image: cartProduct.product.images.first.toString(),
                 fit: BoxFit.cover,
                 height: 80,

@@ -26,11 +26,13 @@ class _CustomDrawerHeaderState extends State<CustomDrawerHeader> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //#TODO 2 verificar se irá funcionar
-              FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: url,
-                  fit: BoxFit.fill,
-                  height: 80),
+
+              FadeInImage.assetNetwork(
+                placeholder: 'assets/cartshop.gif',
+                image: url,
+                fit: BoxFit.fill,
+                height: 80,
+              ),
 
               //NOME DA LOJA WIDGET
 

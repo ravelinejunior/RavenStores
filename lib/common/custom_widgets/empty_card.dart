@@ -37,7 +37,9 @@ class EmptyCard extends StatelessWidget {
               elevation: 10,
               shape: StadiumBorder(),
               color: Color.fromARGB(255, 46, 125, 168),
-              onPressed: () => Navigator.of(context).pushNamed('/products'),
+              onPressed: () {
+                Navigator.of(context).popAndPushNamed('/base');
+              },
               icon: Icon(
                 Icons.add_shopping_cart,
                 color: Colors.white,

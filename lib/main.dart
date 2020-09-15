@@ -9,6 +9,7 @@ import 'package:ravelinestores/models/product.dart';
 import 'package:ravelinestores/screens/address/address_screen.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/cart/cart_screen.dart';
+import 'package:ravelinestores/screens/checkout/checkout_screen.dart';
 import 'package:ravelinestores/screens/edit_product/edit_product_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
 import 'package:ravelinestores/screens/product_screen/product_screen.dart';
@@ -96,6 +97,11 @@ class MyApp extends StatelessWidget {
             case '/address':
               return MaterialPageRoute(
                 builder: (_) => AddressScreen(),
+              );
+
+            case '/payment':
+              return MaterialPageRoute(
+                builder: (_) => CheckoutScreen(),
               );
 
             case '/editProduct':

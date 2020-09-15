@@ -46,7 +46,6 @@ class UserManager extends ChangeNotifier {
 
       onSucess();
     } on PlatformException catch (e) {
-      print(getErrorString(e.code));
       onFail(getErrorString(e.code));
     }
 

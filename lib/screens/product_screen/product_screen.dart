@@ -54,7 +54,7 @@ class ProductScreen extends StatelessWidget {
           children: [
             //imagens carroussel
             AspectRatio(
-              aspectRatio: 1,
+              aspectRatio: 0.8,
               child: Carousel(
                 images: product.images.map((url) {
                   return NetworkImage(url.toString());
@@ -63,9 +63,7 @@ class ProductScreen extends StatelessWidget {
                 dotIncreasedColor: primaryColor,
                 dotColor: Colors.blueAccent,
                 dotSize: 6,
-                boxFit: BoxFit.cover,
-                autoplay: true,
-                autoplayDuration: Duration(seconds: 5),
+                boxFit: BoxFit.fill,
                 borderRadius: true,
               ),
             ),

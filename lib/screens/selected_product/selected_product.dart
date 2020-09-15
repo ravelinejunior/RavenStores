@@ -21,11 +21,13 @@ class SelectedProduct extends StatelessWidget {
               return Card(
                 elevation: 5,
                 child: ListTile(
-                  leading: FadeInImage.assetNetwork(
-                    width: 100,
-                    placeholder: 'assets/discuss.gif',
-                    image: product.images.first as String,
-                    fit: BoxFit.fill,
+                  leading: Container(
+                    child: FadeInImage.assetNetwork(
+                      width: 100,
+                      placeholder: 'assets/cartshop.gif',
+                      image: product.images.first as String,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   title: Text(
                     '${product.name}',

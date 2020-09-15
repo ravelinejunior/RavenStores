@@ -50,8 +50,9 @@ class ItemTile extends StatelessWidget {
                       content: product != null
                           ? ListTile(
                               leading: item.image is String
-                                  ? FadeInImage.memoryNetwork(
-                                      placeholder: kTransparentImage,
+                                  ? FadeInImage.assetNetwork(
+                                      placeholder:
+                                          'assets/shimmerloadingodd.gif',
                                       image: item.image as String,
                                       fit: BoxFit.fill,
                                       height: 100,
@@ -134,8 +135,10 @@ class ItemTile extends StatelessWidget {
           elevation: 5,
           shadowColor: Colors.grey,
           child: item.image is String
-              ? FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
+              ? FadeInImage.assetNetwork(
+                  placeholder: 'assets/girlshopping.gif',
+                  placeholderCacheHeight: 300,
+                  placeholderCacheWidth: 300,
                   image: item.image as String,
                   fit: BoxFit.cover,
                 )

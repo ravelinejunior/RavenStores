@@ -32,7 +32,11 @@ class AddressScreen extends StatelessWidget {
                 builder: (contextOut, cartManager, childOut) {
                   return PriceCard(
                     buttonText: "Continuar com Pagamento",
-                    onPressed: cartManager.isAddressValid ? () {} : null,
+                    onPressed: cartManager.isAddressValid
+                        ? () {
+                            Navigator.of(context).pushNamed('/payment');
+                          }
+                        : null,
                     icon: Icon(Icons.navigate_next),
                     color: Color.fromARGB(255, 46, 125, 168),
                   );

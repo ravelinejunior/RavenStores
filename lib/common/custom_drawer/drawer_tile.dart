@@ -22,8 +22,6 @@ class DrawerTile extends StatelessWidget {
       onTap: () {
         //passar para outra pagina
         context.read<PageManager>().setPage(page);
-        print(page);
-        print(curPage);
       },
       splashColor: primaryColor,
       child: SizedBox(

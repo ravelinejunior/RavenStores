@@ -28,7 +28,7 @@ class LoginCard extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-              ),
+              ), /* 
               Container(
                 height: 56,
                 child: RaisedButton.icon(
@@ -42,7 +42,7 @@ class LoginCard extends StatelessWidget {
                   textColor: Colors.white,
                   color: Color.fromARGB(255, 46, 125, 168),
                 ),
-              )
+              ), */
             ],
           ),
         ),

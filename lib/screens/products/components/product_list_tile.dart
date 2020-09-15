@@ -33,8 +33,8 @@ class ProductListTile extends StatelessWidget {
                 child: Image.network(product.images.first),
               ), */
 
-              FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
+              FadeInImage.assetNetwork(
+                placeholder: 'assets/girlshopping.gif',
                 image: product.images.first.toString(),
                 fit: BoxFit.fill,
                 height: 120,
