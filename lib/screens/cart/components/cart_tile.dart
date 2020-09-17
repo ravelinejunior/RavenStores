@@ -20,13 +20,14 @@ class CartTile extends StatelessWidget {
           child: Row(
             children: [
               //imagem
-              FadeInImage.assetNetwork(
-                placeholder: 'assets/cartshop.gif',
-                image: cartProduct.product.images.first.toString(),
-                fit: BoxFit.cover,
-                height: 80,
-                width: 80,
-              ),
+              if (cartProduct.product.images != null)
+                FadeInImage.assetNetwork(
+                  placeholder: 'assets/cartshop.gif',
+                  image: cartProduct.product.images.first.toString(),
+                  fit: BoxFit.cover,
+                  height: 80,
+                  width: 80,
+                ),
 
               Expanded(
                 child: Padding(
@@ -69,7 +70,7 @@ class CartTile extends StatelessWidget {
                             );
                           else
                             return Text(
-                              'Quantidade indisponível no momento.',
+                              'Desculpe belo cliente, só temos ${cartProduct.itemSize.stock} itens no estoque!',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FontStyle.italic,

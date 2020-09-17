@@ -63,6 +63,7 @@ class ProductScreen extends StatelessWidget {
                 dotIncreasedColor: primaryColor,
                 dotColor: Colors.blueAccent,
                 dotSize: 6,
+                autoplay: false,
                 boxFit: BoxFit.fill,
                 borderRadius: true,
               ),

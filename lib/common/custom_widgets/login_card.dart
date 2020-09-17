@@ -28,12 +28,14 @@ class LoginCard extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-              ), /* 
+              ),
               Container(
                 height: 56,
                 child: RaisedButton.icon(
                   shape: StadiumBorder(),
-                  onPressed: () => Navigator.of(context).pushNamed('/login'),
+                  onPressed: () => {
+                    Navigator.of(context).pushReplacementNamed('/login'),
+                  },
                   icon: Icon(
                     Icons.account_box,
                     color: Colors.white,
@@ -42,7 +44,7 @@ class LoginCard extends StatelessWidget {
                   textColor: Colors.white,
                   color: Color.fromARGB(255, 46, 125, 168),
                 ),
-              ), */
+              ),
             ],
           ),
         ),

@@ -4,7 +4,13 @@ import 'package:ravelinestores/models/item_size.dart';
 import 'package:ravelinestores/models/product.dart';
 
 class CartProduct extends ChangeNotifier {
-  Product product;
+  Product _product;
+  Product get product => _product;
+  set product(Product value) {
+    _product = value;
+    notifyListeners();
+  }
+
   Firestore firestore = Firestore.instance;
 
   String productId;
@@ -13,7 +19,7 @@ class CartProduct extends ChangeNotifier {
   int quantity;
 
   //construtor
-  CartProduct.fromProduct(this.product) {
+  CartProduct.fromProduct(this._product) {
     productId = product.id;
     size = product.selectedSize.name;
     quantity = 1;
@@ -29,7 +35,6 @@ class CartProduct extends ChangeNotifier {
     firestore.document('Products/$productId').get().then(
       (doc) {
         product = Product.fromDocument(doc);
-        notifyListeners();
       },
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_widgets/price_cart.dart';
@@ -5,6 +7,7 @@ import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/managers/checkout_manager.dart';
 
 class CheckoutScreen extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final colorButton = const Color.fromARGB(255, 68, 120, 160);
@@ -17,6 +20,7 @@ class CheckoutScreen extends StatelessWidget {
           checkoutManager..updateCart(cartManager),
       lazy: false,
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: const Text("Pagamento"),
           centerTitle: true,
@@ -40,7 +44,36 @@ class CheckoutScreen extends StatelessWidget {
                     buttonText: "Finalizar Pedido",
                     color: colorButton,
                     icon: Icon(Icons.payment),
-                    onPressed: () {},
+                    onPressed: () {
+                      checkoutManager.checkout(
+                        onStockFail: (e) {
+                          _scaffoldKey.currentState.showSnackBar(
+                            SnackBar(
+                              elevation: 10,
+                              content: Card(
+                                elevation: 0,
+                                color: Colors.red,
+                                margin: const EdgeInsets.all(8),
+                                child: Text(
+                                  "PRODUTO ESGOTADO! REDIRECIONANDO USUARIO,AGUARDE ........",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              backgroundColor: Colors.red,
+                              duration: const Duration(seconds: 3),
+                              behavior: SnackBarBehavior.floating,
+                              shape: StadiumBorder(),
+                            ),
+                          );
+
+                          Future.delayed(Duration(seconds: 3)).then(
+                            (value) => Navigator.of(context).popUntil(
+                                (route) => route.settings.name == '/cart'),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
               );
