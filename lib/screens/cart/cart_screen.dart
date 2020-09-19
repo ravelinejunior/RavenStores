@@ -32,7 +32,7 @@ class CartScreen extends StatelessWidget {
                 return ListView(
                   children: [
                     Column(
-                      //transformar os itens em uma lista e depois transformá-los em um cart tile customizável
+                      //transformar os itens em uma lista e depois transformá-los em um cart tile customizávels
                       children: cartManager.items
                           .map((cartProduct) => CartTile(cartProduct))
                           .toList(),

@@ -231,4 +231,13 @@ class CartManager extends ChangeNotifier {
 
   //verificar se address é valido e frete foi calculado com sucesso
   bool get isAddressValid => address != null && deliveryPrice != null;
+
+  //limpar cart apos concluir pedido
+  Future<void> clear() async {
+    for (final cartProduct in items) {
+      await user.cartReference.document(cartProduct.id).delete();
+    }
+    items.clear();
+    notifyListeners();
+  }
 }

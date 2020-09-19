@@ -1,24 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
+import 'package:ravelinestores/models/order.dart';
 import 'package:ravelinestores/models/product.dart';
 
 class CheckoutManager extends ChangeNotifier {
   CartManager cartManager;
   final Firestore firestore = Firestore.instance;
+  bool _loading = false;
+  bool get loading => _loading;
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   void updateCart(CartManager cartManager) {
     this.cartManager = cartManager;
   }
 
-  Future<void> checkout({Function onStockFail}) async {
+  Future<void> checkout({Function onStockFail, Function onSucess}) async {
+    loading = true;
     try {
       await _decrementStock();
     } catch (e) {
       onStockFail(e);
+      loading = false;
+      return;
     }
 
-    _getOrderId().then((value) => print(value));
+    //TODO: Processar pagamento
+
+    /* 
+      CRIAR OBJETO DO PEDIDO QUE SERÁ ENVIADO PARA O FIREBASE
+     */
+
+    final orderId = await _getOrderId();
+
+    final order = Order.fromCartManager(cartManager);
+    order.orderId = orderId.toString();
+
+    await order.save();
+    cartManager.clear();
+
+    onSucess();
+    loading = false;
   }
 
   /* 

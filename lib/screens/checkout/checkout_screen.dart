@@ -38,15 +38,15 @@ class CheckoutScreen extends StatelessWidget {
           ),
           Consumer<CheckoutManager>(
             builder: (contextOut, checkoutManager, child) {
-              return ListView(
-                children: [
-                  PriceCard(
-                    buttonText: "Finalizar Pedido",
-                    color: colorButton,
-                    icon: Icon(Icons.payment),
-                    onPressed: () {
-                      checkoutManager.checkout(
-                        onStockFail: (e) {
+              if (!checkoutManager.loading)
+                return ListView(
+                  children: [
+                    PriceCard(
+                      buttonText: "Finalizar Pedido",
+                      color: colorButton,
+                      icon: Icon(Icons.payment),
+                      onPressed: () {
+                        checkoutManager.checkout(onStockFail: (e) {
                           _scaffoldKey.currentState.showSnackBar(
                             SnackBar(
                               elevation: 10,
@@ -71,12 +71,59 @@ class CheckoutScreen extends StatelessWidget {
                             (value) => Navigator.of(context).popUntil(
                                 (route) => route.settings.name == '/cart'),
                           );
-                        },
-                      );
-                    },
+                        }, onSucess: () {
+                          _scaffoldKey.currentState.showSnackBar(
+                            SnackBar(
+                              elevation: 10,
+                              content: Card(
+                                elevation: 0,
+                                color: Colors.transparent,
+                                margin: const EdgeInsets.all(8),
+                                child: Text(
+                                  "PEDIDO REALIZADO COM SUCESSO!!!",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              backgroundColor: Colors.green,
+                              duration: const Duration(seconds: 3),
+                              behavior: SnackBarBehavior.floating,
+                              shape: StadiumBorder(),
+                            ),
+                          );
+
+                          Future.delayed(Duration(seconds: 2)).then(
+                            (value) => Navigator.of(context).popUntil(
+                                (route) => route.settings.name == '/base'),
+                          );
+                        });
+                      },
+                    ),
+                  ],
+                );
+              else
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        strokeWidth: 5,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                      const SizedBox(height: 18.0),
+                      Text(
+                        'Estamos processando seu pedido...',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16.0,
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              );
+                );
             },
           ),
         ]),

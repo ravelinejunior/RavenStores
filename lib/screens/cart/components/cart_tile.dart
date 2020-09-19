@@ -70,7 +70,9 @@ class CartTile extends StatelessWidget {
                             );
                           else
                             return Text(
-                              'Desculpe belo cliente, só temos ${cartProduct.itemSize.stock} itens no estoque!',
+                              cartProduct.itemSize.stock > 1
+                                  ? 'Desculpe belo cliente, só temos ${cartProduct.itemSize.stock} itens no estoque!'
+                                  : 'Desculpe belo cliente, só temos ${cartProduct.itemSize.stock} item no estoque!',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontStyle: FontStyle.italic,

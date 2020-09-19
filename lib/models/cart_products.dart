@@ -17,6 +17,7 @@ class CartProduct extends ChangeNotifier {
   String id;
   String size;
   int quantity;
+  num fixedPrice;
 
   //construtor
   CartProduct.fromProduct(this._product) {
@@ -92,4 +93,14 @@ class CartProduct extends ChangeNotifier {
 
   //getter do preço total
   num get totalPrice => unitPrice * quantity;
+
+  //transforma objeto em mapa
+  Map<String, dynamic> toOrderItemMap() {
+    return {
+      'pid': productId,
+      'quantity': quantity,
+      'size': size,
+      'fixedPrice': fixedPrice ?? unitPrice,
+    };
+  }
 }
