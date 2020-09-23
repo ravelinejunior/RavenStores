@@ -40,6 +40,18 @@ class CartProduct extends ChangeNotifier {
     );
   }
 
+  //recuperar items em formato mapa
+  CartProduct.fromMap(Map<String, dynamic> map) {
+    productId = map['pid'] as String;
+    quantity = map['quantity'] as int;
+    size = map['size'] as String;
+    fixedPrice = map['fixedPrice'] as num;
+
+    firestore.document('Products/$productId').get().then((doc) {
+      product = Product.fromDocument(doc);
+    });
+  }
+
   //verificar se é stackable
   bool stackable(Product product) {
     return product.id == productId && product.selectedSize.name == size;

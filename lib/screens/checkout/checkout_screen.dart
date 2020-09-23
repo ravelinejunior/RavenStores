@@ -6,8 +6,14 @@ import 'package:ravelinestores/common/custom_widgets/price_cart.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/managers/checkout_manager.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
+  @override
+  _CheckoutScreenState createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final colorButton = const Color.fromARGB(255, 68, 120, 160);
@@ -46,59 +52,65 @@ class CheckoutScreen extends StatelessWidget {
                       color: colorButton,
                       icon: Icon(Icons.payment),
                       onPressed: () {
-                        checkoutManager.checkout(onStockFail: (e) {
-                          _scaffoldKey.currentState.showSnackBar(
-                            SnackBar(
-                              elevation: 10,
-                              content: Card(
-                                elevation: 0,
-                                color: Colors.red,
-                                margin: const EdgeInsets.all(8),
-                                child: Text(
-                                  "PRODUTO ESGOTADO! REDIRECIONANDO USUARIO,AGUARDE ........",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              backgroundColor: Colors.red,
-                              duration: const Duration(seconds: 3),
-                              behavior: SnackBarBehavior.floating,
-                              shape: StadiumBorder(),
-                            ),
-                          );
-
-                          Future.delayed(Duration(seconds: 3)).then(
-                            (value) => Navigator.of(context).popUntil(
-                                (route) => route.settings.name == '/cart'),
-                          );
-                        }, onSucess: () {
-                          _scaffoldKey.currentState.showSnackBar(
-                            SnackBar(
-                              elevation: 10,
-                              content: Card(
-                                elevation: 0,
-                                color: Colors.transparent,
-                                margin: const EdgeInsets.all(8),
-                                child: Text(
-                                  "PEDIDO REALIZADO COM SUCESSO!!!",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                        checkoutManager.checkout(
+                          onStockFail: (e) {
+                            _scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                elevation: 10,
+                                content: Card(
+                                  elevation: 0,
+                                  color: Colors.red,
+                                  margin: const EdgeInsets.all(8),
+                                  child: Text(
+                                    "PRODUTO ESGOTADO! REDIRECIONANDO USUARIO,AGUARDE ........",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
+                                backgroundColor: Colors.red,
+                                duration: const Duration(seconds: 3),
+                                behavior: SnackBarBehavior.floating,
+                                shape: StadiumBorder(),
                               ),
-                              backgroundColor: Colors.green,
-                              duration: const Duration(seconds: 3),
-                              behavior: SnackBarBehavior.floating,
-                              shape: StadiumBorder(),
-                            ),
-                          );
+                            );
 
-                          Future.delayed(Duration(seconds: 2)).then(
-                            (value) => Navigator.of(context).popUntil(
-                                (route) => route.settings.name == '/base'),
-                          );
-                        });
+                            Future.delayed(Duration(seconds: 3)).then(
+                              (value) => Navigator.of(context).popUntil(
+                                  (route) => route.settings.name == '/cart'),
+                            );
+                          },
+                          onSucess: (order) {
+                            Navigator.of(context).popUntil(
+                              (route) => route.settings.name == '/base',
+                            );
+
+                            Navigator.of(context)
+                                .pushNamed('/confirmation', arguments: order);
+
+                            /* _scaffoldKey.currentState.showSnackBar(
+                              SnackBar(
+                                elevation: 10,
+                                content: Card(
+                                  elevation: 0,
+                                  color: Colors.transparent,
+                                  margin: const EdgeInsets.all(8),
+                                  child: Text(
+                                    "PEDIDO REALIZADO COM SUCESSO!!!",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                backgroundColor: Colors.green,
+                                duration: const Duration(seconds: 2),
+                                behavior: SnackBarBehavior.floating,
+                                shape: StadiumBorder(),
+                              ),
+                            ); */
+                            //context.read<PageManager>().setPage(2);
+                          },
+                        );
                       },
                     ),
                   ],
@@ -120,7 +132,26 @@ class CheckoutScreen extends StatelessWidget {
                           fontWeight: FontWeight.w800,
                           fontSize: 16.0,
                         ),
-                      )
+                      ),
+                      SnackBar(
+                        elevation: 10,
+                        content: Card(
+                          elevation: 0,
+                          color: Colors.transparent,
+                          margin: const EdgeInsets.all(8),
+                          child: Text(
+                            "PEDIDO REALIZADO COM SUCESSO!!!",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        backgroundColor: Colors.green,
+                        duration: const Duration(seconds: 2),
+                        behavior: SnackBarBehavior.floating,
+                        shape: StadiumBorder(),
+                      ),
                     ],
                   ),
                 );

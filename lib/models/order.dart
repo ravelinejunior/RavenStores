@@ -17,6 +17,8 @@ class Order {
 
   final Firestore firestore = Firestore.instance;
 
+  String get formattedId => '#${orderId.padLeft(8, '0')}';
+
   //construtor
   Order.fromCartManager(CartManager cartManager) {
     items = List.from(cartManager.items);
@@ -34,5 +36,23 @@ class Order {
       'userId': userId,
       'address': address.toMap(),
     });
+  }
+
+  //recuperar valor do firebase
+  Order.fromDocument(DocumentSnapshot document) {
+    orderId = document.documentID;
+    //como items é um mapa de dados, mapear cada item
+    items = (document.data['items'] as List<dynamic>).map((e) {
+      return CartProduct.fromMap(e as Map<String, dynamic>);
+    }).toList();
+    price = document.data['price'] as num;
+    userId = document.data['userId'] as String;
+    address = Address.fromMap(document.data['address'] as Map<String, dynamic>);
+    date = document.data['date'] as Timestamp;
+  }
+
+  @override
+  String toString() {
+    return "Orders: orderId:$orderId, Items:$items, price:$price, Address:$address";
   }
 }

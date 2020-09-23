@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ravelinestores/managers/admin_users_manager.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/managers/home_manager.dart';
+import 'package:ravelinestores/managers/orders_manager.dart';
 import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/product.dart';
@@ -10,13 +11,17 @@ import 'package:ravelinestores/screens/address/address_screen.dart';
 import 'package:ravelinestores/screens/base/base_screen.dart';
 import 'package:ravelinestores/screens/cart/cart_screen.dart';
 import 'package:ravelinestores/screens/checkout/checkout_screen.dart';
+import 'package:ravelinestores/screens/confirmation_screen/confirmation_screen.dart';
 import 'package:ravelinestores/screens/edit_product/edit_product_screen.dart';
 import 'package:ravelinestores/screens/login/login_screen.dart';
+import 'package:ravelinestores/screens/orders_screen/orders_screen.dart';
 import 'package:ravelinestores/screens/product_screen/product_screen.dart';
 import 'package:ravelinestores/screens/products/products_screen.dart';
 import 'package:ravelinestores/screens/selected_product/selected_product.dart';
 import 'package:ravelinestores/screens/signup/signup_screen.dart';
 import 'package:ravelinestores/screens/splash_screen/splash_screen.dart';
+
+import 'models/order.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,7 +55,13 @@ class MyApp extends StatelessWidget {
           update: (context, userManager, cartManager) =>
               cartManager..updateUser(userManager),
         ),
-
+        //vincular o userManager com o OrdersManager
+        ChangeNotifierProxyProvider<UserManager, OrdersManager>(
+          create: (_) => OrdersManager(),
+          lazy: false,
+          update: (context, userManager, ordersManager) =>
+              ordersManager..updateUser(userManager.user),
+        ),
         //vincular o userManager com o AdminManager
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
           create: (_) => AdminUsersManager(),
@@ -89,15 +100,25 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (_) => SelectedProduct(),
               );
+
             case '/cart':
               return MaterialPageRoute(
                 builder: (_) => CartScreen(),
                 settings: settings,
               );
-
+            case '/my_orders':
+              return MaterialPageRoute(
+                builder: (_) => OrdersScreen(),
+                settings: settings,
+              );
             case '/address':
               return MaterialPageRoute(
                 builder: (_) => AddressScreen(),
+              );
+
+            case '/confirmation':
+              return MaterialPageRoute(
+                builder: (_) => ConfirmationScreen(settings.arguments as Order),
               );
 
             case '/payment':

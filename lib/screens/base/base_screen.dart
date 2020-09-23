@@ -5,6 +5,7 @@ import 'package:ravelinestores/managers/page_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/screens/admin_users/admin_users_screen.dart';
 import 'package:ravelinestores/screens/home/home_screen.dart';
+import 'package:ravelinestores/screens/orders_screen/orders_screen.dart';
 import 'package:ravelinestores/screens/products/products_screen.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -26,15 +27,9 @@ class BaseScreen extends StatelessWidget {
               //Produtos Screen
               ProductsScreen(),
 
-              Scaffold(
-                appBar: AppBar(
-                  title: const Text("Meus pedidos"),
-                  backgroundColor: Colors.blue,
-                  centerTitle: true,
-                  shadowColor: Colors.orange,
-                ), //DRAWER WIDGET
-                drawer: CustomDrawer(),
-              ),
+              //meus pedidos
+              OrdersScreen(),
+
               Scaffold(
                 appBar: AppBar(
                   title: const Text("Lojas"),
