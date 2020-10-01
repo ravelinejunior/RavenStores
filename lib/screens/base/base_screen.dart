@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
 import 'package:ravelinestores/managers/page_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
+import 'package:ravelinestores/screens/admin_orders/admin_orders_screen.dart';
 import 'package:ravelinestores/screens/admin_users/admin_users_screen.dart';
 import 'package:ravelinestores/screens/home/home_screen.dart';
 import 'package:ravelinestores/screens/orders_screen/orders_screen.dart';
@@ -55,15 +56,7 @@ class BaseScreen extends StatelessWidget {
               //admin part
               if (userManager.adminEnabled) ...[
                 AdminUsersScreen(),
-                Scaffold(
-                  appBar: AppBar(
-                    title: const Text("Pedidos realizados"),
-                    elevation: 5,
-                    backgroundColor: Colors.indigoAccent,
-                    centerTitle: true,
-                  ), //DRAWER WIDGET
-                  drawer: CustomDrawer(),
-                ),
+                AdminOrdersScreen(),
               ]
             ],
           );

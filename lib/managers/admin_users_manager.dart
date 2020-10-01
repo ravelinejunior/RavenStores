@@ -28,8 +28,11 @@ class AdminUsersManager extends ChangeNotifier {
 //escuta usuarios adicionados
   void _listenToUsers() {
     //firebase datas
-    _subscription =
-        firestore.collection("Users").snapshots().listen((snapshot) {
+    _subscription = firestore
+        .collection("Users")
+        .orderBy('name')
+        .snapshots()
+        .listen((snapshot) {
       users = snapshot.documents.map((e) => User.fromDocument(e)).toList();
       //ordenar usuarios por nome
       users

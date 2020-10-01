@@ -47,6 +47,7 @@ dependencies:
   brasil_fields: ^0.4.0
   geolocator: ^5.3.1
   shimmer: ^1.1.1
+  sliding_up_panel: ^1.0.2
 
 
 dev_dependencies:

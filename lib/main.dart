@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ravelinestores/managers/admin_orders_manager.dart';
 import 'package:ravelinestores/managers/admin_users_manager.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/managers/home_manager.dart';
@@ -69,15 +70,27 @@ class MyApp extends StatelessWidget {
           update: (context, userManager, adminUsersManager) =>
               adminUsersManager..updateUsersManager(userManager),
         ),
+
+        //vincular o userManager com o AdminOrdersManager
+        ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
+          create: (_) => AdminOrdersManager(),
+          lazy: false,
+          update: (context, userManager, adminOrdersManager) =>
+              adminOrdersManager
+                ..updateUserAdmin(
+                  adminEnabled: userManager.adminEnabled,
+                ),
+        ),
       ],
       child: MaterialApp(
         title: "Raveline's Stores",
         theme: ThemeData(
-            primaryColor: const Color.fromARGB(255, 4, 125, 141),
-            accentColor: Colors.white,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
-            appBarTheme: AppBarTheme(elevation: 0.0)),
+          primaryColor: const Color.fromARGB(255, 4, 125, 141),
+          accentColor: Colors.white,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+          appBarTheme: AppBarTheme(elevation: 0.0),
+        ),
         debugShowCheckedModeBanner: false,
         initialRoute: '/splash',
         //settings recebe as informações da rota

@@ -2,7 +2,9 @@ import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
+import 'package:ravelinestores/managers/admin_orders_manager.dart';
 import 'package:ravelinestores/managers/admin_users_manager.dart';
+import 'package:ravelinestores/managers/page_manager.dart';
 
 class AdminUsersScreen extends StatelessWidget {
   @override
@@ -49,6 +51,13 @@ class AdminUsersScreen extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white70, fontWeight: FontWeight.w700),
                     ),
+                    onTap: () {
+                      context.read<AdminOrdersManager>().setUserFilter(
+                            adminUsersManager.users[index],
+                          );
+                      //enviar para tela de pedidos
+                      context.read<PageManager>().setPage(6);
+                    },
                   );
                 },
               );

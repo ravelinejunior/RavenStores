@@ -39,7 +39,7 @@ class OrderProductTile extends StatelessWidget {
                     overflow: TextOverflow.fade,
                   ),
                   Text(
-                    "Tamanho: ${cartProduct.size}",
+                    "Tipo: ${cartProduct.size}",
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 14,

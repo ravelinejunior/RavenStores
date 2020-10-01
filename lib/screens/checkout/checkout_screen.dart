@@ -80,14 +80,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             );
                           },
                           onSucess: (order) {
-                            Navigator.of(context).popUntil(
-                              (route) => route.settings.name == '/base',
-                            );
-
-                            Navigator.of(context)
-                                .pushNamed('/confirmation', arguments: order);
-
-                            /* _scaffoldKey.currentState.showSnackBar(
+                            _scaffoldKey.currentState.showSnackBar(
                               SnackBar(
                                 elevation: 10,
                                 content: Card(
@@ -107,8 +100,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 behavior: SnackBarBehavior.floating,
                                 shape: StadiumBorder(),
                               ),
-                            ); */
-                            //context.read<PageManager>().setPage(2);
+                            );
+
+                            Future.delayed(Duration(seconds: 2)).then(
+                              (value) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pushNamed('/confirmation',
+                                    arguments: order);
+                              },
+                            );
+
+                            /* Navigator.of(context).popUntil(
+                              (route) => route.settings.name == '/base',
+                            );
+                            */
                           },
                         );
                       },
@@ -132,25 +140,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 16.0,
                         ),
-                      ),
-                      SnackBar(
-                        elevation: 10,
-                        content: Card(
-                          elevation: 0,
-                          color: Colors.transparent,
-                          margin: const EdgeInsets.all(8),
-                          child: Text(
-                            "PEDIDO REALIZADO COM SUCESSO!!!",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        backgroundColor: Colors.green,
-                        duration: const Duration(seconds: 2),
-                        behavior: SnackBarBehavior.floating,
-                        shape: StadiumBorder(),
                       ),
                     ],
                   ),

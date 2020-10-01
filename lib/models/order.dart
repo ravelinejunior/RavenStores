@@ -3,6 +3,8 @@ import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/models/address.dart';
 import 'package:ravelinestores/models/cart_products.dart';
 
+enum Status { canceled, preparing, transporting, delivered }
+
 class Order {
   String orderId;
 
@@ -16,8 +18,13 @@ class Order {
   Timestamp date;
 
   final Firestore firestore = Firestore.instance;
+  DocumentReference get fireStoreRef =>
+      firestore.collection("Orders").document(orderId);
 
   String get formattedId => '#${orderId.padLeft(8, '0')}';
+
+  Status status;
+  String get statusText => getStatusText(status);
 
   //construtor
   Order.fromCartManager(CartManager cartManager) {
@@ -25,16 +32,19 @@ class Order {
     price = cartManager.totalPrice;
     userId = cartManager.user.id;
     address = cartManager.address;
+    status = Status.preparing;
   }
 
   //salvar pedido firebase
   Future<void> save() async {
-    firestore.collection('Orders').document(orderId).setData({
+    fireStoreRef.setData({
       'orderId': orderId,
       'items': items.map((e) => e.toOrderItemMap()).toList(),
       'price': price,
       'userId': userId,
       'address': address.toMap(),
+      'status': status.index,
+      'date': Timestamp.now(),
     });
   }
 
@@ -49,6 +59,63 @@ class Order {
     userId = document.data['userId'] as String;
     address = Address.fromMap(document.data['address'] as Map<String, dynamic>);
     date = document.data['date'] as Timestamp;
+
+    status = Status.values[document.data['status'] as int];
+  }
+
+  //transforma enum em string para exibição
+  static String getStatusText(Status status) {
+    switch (status) {
+      case Status.canceled:
+        return 'Cancelado';
+        break;
+      case Status.preparing:
+        return 'Em preparação para envio';
+        break;
+      case Status.transporting:
+        return 'Em transporte';
+        break;
+      case Status.delivered:
+        return 'Pedido entregue';
+        break;
+      default:
+        return '';
+        break;
+    }
+  }
+
+  //recuar com pedido
+  Function() get back {
+    return (status.index >= Status.transporting.index)
+        ? () {
+            status = Status.values[status.index - 1];
+            fireStoreRef.updateData(
+              {'status': status.index},
+            );
+          }
+        : null;
+  }
+
+  //avançar com pedido
+  Function() get advance {
+    return (status.index <= Status.transporting.index)
+        ? () {
+            status = Status.values[status.index + 1];
+            fireStoreRef.updateData(
+              {'status': status.index},
+            );
+          }
+        : null;
+  }
+
+  //modificar documento de pedido requisitado e atualiza-lo
+  void updateFromDocument(DocumentSnapshot doc) {
+    status = Status.values[doc.data['status'] as int];
+  }
+
+  void cancel() {
+    status = Status.canceled;
+    fireStoreRef.updateData({'status': status.index});
   }
 
   @override
