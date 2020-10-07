@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/models/order.dart';
+import 'export_address_dialog.dart';
 import 'order_product_tile.dart';
 
 class OrderTile extends StatelessWidget {
@@ -74,11 +75,12 @@ class OrderTile extends StatelessWidget {
                       showDialog(
                           context: context,
                           child: AlertDialog(
-                            title: Text('Cancelar pedido!'),
+                            title:
+                                Text('Cancelar pedido ${order.formattedId}!'),
                             elevation: 5,
                             scrollable: true,
-                            content: const Text(
-                                "Deseja realmente cancelar o pedido?"),
+                            content: Text(
+                                "Deseja realmente cancelar o pedido ${order.formattedId}?"),
                             actions: [
                               FlatButton(
                                 //REMOVER
@@ -172,7 +174,14 @@ class OrderTile extends StatelessWidget {
                     disabledColor: Colors.blueAccent.withAlpha(100),
                     disabledTextColor: Colors.white.withAlpha(100),
                     textColor: Colors.blue[800],
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return ExportAddressDialog(order.address);
+                        },
+                      );
+                    },
                     icon: Icon(
                       Icons.location_on,
                       color: Colors.blue[800],

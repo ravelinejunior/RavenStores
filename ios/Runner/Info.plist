@@ -49,6 +49,10 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Acessar microfone para gravação de audio</string>
 
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Acessar camera para adicionar imagens</string>
+	
+
 
 </dict>
 </plist>

@@ -9,9 +9,15 @@ import 'package:ravelinestores/screens/home/home_screen.dart';
 import 'package:ravelinestores/screens/orders_screen/orders_screen.dart';
 import 'package:ravelinestores/screens/products/products_screen.dart';
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends StatefulWidget {
   //page view que irá controlar o page view
+  @override
+  _BaseScreenState createState() => _BaseScreenState();
+}
+
+class _BaseScreenState extends State<BaseScreen> {
   final PageController pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Provider(

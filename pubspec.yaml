@@ -48,6 +48,9 @@ dependencies:
   geolocator: ^5.3.1
   shimmer: ^1.1.1
   sliding_up_panel: ^1.0.2
+  gallery_saver: ^2.0.1
+  screenshot: ^0.2.0
+ 
 
 
 dev_dependencies:
