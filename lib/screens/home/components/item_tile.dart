@@ -5,7 +5,7 @@ import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/models/product.dart';
 import 'package:ravelinestores/models/section.dart';
 import 'package:ravelinestores/models/section_item.dart';
-import 'package:transparent_image/transparent_image.dart';
+
 import 'package:provider/provider.dart';
 
 class ItemTile extends StatelessWidget {
@@ -50,19 +50,27 @@ class ItemTile extends StatelessWidget {
                       content: product != null
                           ? ListTile(
                               leading: item.image is String
-                                  ? FadeInImage.assetNetwork(
-                                      placeholder:
-                                          'assets/shimmerloadingodd.gif',
-                                      image: item.image as String,
-                                      fit: BoxFit.fill,
-                                      height: 100,
-                                      width: 100,
+                                  ? Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                      ),
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder:
+                                            'assets/shimmerloadingodd.gif',
+                                        image: item.image as String,
+                                        fit: BoxFit.fill,
+                                      ),
                                     )
-                                  : Image.file(
-                                      item.image as File,
-                                      fit: BoxFit.cover,
-                                      width: 100,
-                                      height: 100,
+                                  : Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                      ),
+                                      child: Image.file(
+                                        item.image as File,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                               title: Text(
                                 '${product.name}',
@@ -134,6 +142,9 @@ class ItemTile extends StatelessWidget {
         child: Card(
           elevation: 5,
           shadowColor: Colors.grey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
           child: item.image is String
               ? FadeInImage.assetNetwork(
                   placeholder: 'assets/girlshopping.gif',
