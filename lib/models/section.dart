@@ -122,7 +122,8 @@ class Section extends ChangeNotifier {
 
     for (final original in originalItems) {
       //verificar se item ainda existe apos edição
-      if (!items.contains(original)) {
+      if (!items.contains(original) &&
+          (original.image as String).contains('firebase')) {
         try {
           //item removido
           final ref =
@@ -150,12 +151,14 @@ class Section extends ChangeNotifier {
      */
     await firestoreRef.delete();
     for (final item in items) {
-      try {
-        final ref = await storage.getReferenceFromUrl(item.image as String);
-        await ref.delete();
-      } catch (e) {
-        debugPrint(
-            'Imagem não deletada pois não está armazenada em nosso servidor');
+      if ((item.image as String).contains('firebase')) {
+        try {
+          final ref = await storage.getReferenceFromUrl(item.image as String);
+          await ref.delete();
+        } catch (e) {
+          debugPrint(
+              'Imagem não deletada pois não está armazenada em nosso servidor');
+        }
       }
     }
   }

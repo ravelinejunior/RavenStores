@@ -9,7 +9,6 @@ import 'cep_input_field.dart';
 class AddressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colorButton = const Color.fromARGB(255, 46, 130, 200);
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(

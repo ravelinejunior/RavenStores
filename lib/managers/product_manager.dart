@@ -37,6 +37,7 @@ class ProductManager extends ChangeNotifier {
   //lista de produtos
   List<Product> allProducts = [];
 
+  // ignore: unused_element
   Future<void> _loadProducts() async {
     //recuperar docs
     final QuerySnapshot querySnapshot =
@@ -52,7 +53,11 @@ class ProductManager extends ChangeNotifier {
   //carregar todas as seções no firebase
   Future<void> _loadAllProducts() async {
     //fica lendo o banco constantemente para atualizações em tempo real
-    firestore.collection('Products').snapshots().listen((snapshot) {
+    firestore
+        .collection('Products')
+        .where('deleted', isEqualTo: false)
+        .snapshots()
+        .listen((snapshot) {
       //sempre que houver modificação na lista no firebase, limpar a lista antes de carrega-la
       allProducts.clear();
       //em cada documento
@@ -83,6 +88,13 @@ class ProductManager extends ChangeNotifier {
   void update(Product product) {
     allProducts.removeWhere((p) => p.id == product.id);
     allProducts.add(product);
+    notifyListeners();
+  }
+
+  //deletar produto
+  Future<void> delete(Product product) async {
+    product.delete();
+    allProducts.removeWhere((p) => p.id == product.id);
     notifyListeners();
   }
 }

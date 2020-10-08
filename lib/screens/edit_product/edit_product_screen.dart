@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ravelinestores/managers/product_manager.dart';
 import 'package:ravelinestores/models/product.dart';
-
 import 'components/images_form.dart';
 import 'components/sizes_form.dart';
 
@@ -31,13 +31,49 @@ class EditProductScreen extends StatelessWidget {
           title: Text(editing ? 'Editar Produto' : 'Criar Produto'),
           centerTitle: true,
           actions: [
-            IconButton(
-              icon: Icon(
-                Icons.delete,
-                color: Colors.white,
+            if (editing)
+              IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        title: Text("Excluir"),
+                        content: Text("Deseja realmente excluir esse produto?"),
+                        actions: [
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "Não",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              context.read<ProductManager>().delete(product);
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "Excluir",
+                              style: TextStyle(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                        elevation: 20,
+                        scrollable: true,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ));
+                },
               ),
-              onPressed: () {},
-            ),
           ],
         ),
         backgroundColor: Colors.white,

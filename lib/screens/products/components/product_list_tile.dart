@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ravelinestores/models/product.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ProductListTile extends StatelessWidget {
   //construtor para recuperar produtos

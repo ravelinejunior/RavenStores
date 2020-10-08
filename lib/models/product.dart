@@ -14,6 +14,7 @@ class Product extends ChangeNotifier {
   List<ItemSize> sizesList;
   List<dynamic> newImages;
   bool _loading = false;
+  bool deleted;
 
 //get e set loading
   bool get loading => _loading;
@@ -28,7 +29,14 @@ class Product extends ChangeNotifier {
   DocumentReference get firestoreRef => firestore.document('Products/$id');
   StorageReference get storageRef => storage.ref().child('Products').child(id);
 
-  Product({this.id, this.name, this.description, this.images, this.sizesList}) {
+  Product({
+    this.id,
+    this.name,
+    this.description,
+    this.images,
+    this.sizesList,
+    this.deleted = false,
+  }) {
     /* 
       quando construtor vazio for chamado, as listas devem ser inicializadas
       caso lista nao seja vazia, passar a propria instancia da lista, caso seja passar vazio
@@ -81,6 +89,7 @@ class Product extends ChangeNotifier {
           (s) => ItemSize.fromMap(s as Map<String, dynamic>),
         )
         .toList();
+    deleted = (document.data['deleted'] ?? false) as bool;
   }
 
   //preço base
@@ -106,6 +115,7 @@ class Product extends ChangeNotifier {
        */
       images: List.from(images),
       sizesList: sizesList.map((size) => size.clone()).toList(),
+      deleted: deleted,
     );
   }
 
@@ -117,6 +127,7 @@ class Product extends ChangeNotifier {
       'name': name,
       'description': description,
       'sizes': exportSizeList(),
+      'deleted': deleted,
     };
 
     //verificar se produto ja existe ou se é um novo produto
@@ -150,7 +161,8 @@ class Product extends ChangeNotifier {
 
     //condição de verificação de existencia de imagens no new images
     for (final image in images) {
-      if (!newImages.contains(image)) {
+      if (!newImages.contains(image) &&
+          (image as String).contains('firebase')) {
         try {
           final ref = await storage.getReferenceFromUrl(image as String);
           await ref.delete();
@@ -169,5 +181,10 @@ class Product extends ChangeNotifier {
   //converter lista de sizes em map para interpretação do firebase e retornar uma lista dos mapas
   List<Map<String, dynamic>> exportSizeList() {
     return sizesList.map((size) => size.toMap()).toList();
+  }
+
+  //deletar produto
+  void delete() {
+    firestoreRef.updateData({'deleted': true});
   }
 }
