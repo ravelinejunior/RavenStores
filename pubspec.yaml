@@ -50,6 +50,8 @@ dependencies:
   sliding_up_panel: ^1.0.2
   gallery_saver: ^2.0.1
   screenshot: ^0.2.0
+  flutter_signin_button: ^1.1.0
+  flutter_facebook_login: ^3.0.0
  
 
 

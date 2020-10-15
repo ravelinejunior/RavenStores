@@ -51,6 +51,56 @@
 
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Acessar camera para adicionar imagens</string>
+
+	<key>CFBundleURLTypes</key>
+	<array>
+  	<dict>
+  	<key>CFBundleURLSchemes</key>
+  	<array>
+    <string>fb923511614844358</string>
+  	</array>
+  	</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>923511614844358</string>
+	<key>FacebookDisplayName</key>
+	<string>RavelineStore</string>
+
+	<key>CFBundleURLTypes</key>
+<array>
+    <!--
+    <dict>
+    ... Some other CFBundleURLTypes definition.
+    </dict>
+    -->
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <!--
+              Replace "000000000000" with your Facebook App ID here.
+              **NOTE**: The scheme needs to start with `fb` and then your ID.
+            -->
+            <string>fb923511614844358</string>
+        </array>
+    </dict>
+</array>
+
+<key>FacebookAppID</key>
+
+<!-- Replace "000000000000" with your Facebook App ID here. -->
+<string>923511614844358</string>
+<key>FacebookDisplayName</key>
+
+<!-- Replace "YOUR_APP_NAME" with your Facebook App name. -->
+<string>RavelineStore</string>
+
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>fbapi</string>
+    <string>fb-messenger-share-api</string>
+    <string>fbauth2</string>
+    <string>fbshareextension</string>
+</array>
 	
 
 

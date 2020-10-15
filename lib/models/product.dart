@@ -76,7 +76,9 @@ class Product extends ChangeNotifier {
     return stock;
   }
 
-  bool get hasStock => totalStock > 0;
+  bool get hasStock {
+    return totalStock > 0 && !deleted;
+  }
 
 //recuperar dados do documento
   Product.fromDocument(DocumentSnapshot document) {
@@ -97,7 +99,7 @@ class Product extends ChangeNotifier {
     //percorrer todos os tamanhos e retornar o valor menor
     num lowest = double.infinity;
     for (final size in sizesList) {
-      if (size.price < lowest && size.hasStock) lowest = size.price;
+      if (size.price < lowest) lowest = size.price;
     }
     notifyListeners();
     return lowest;

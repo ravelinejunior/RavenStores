@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:ravelinestores/helpers/firebase_errors.dart';
 import 'package:ravelinestores/models/user.dart';
 import 'package:flutter/services.dart';
@@ -104,5 +105,43 @@ class UserManager extends ChangeNotifier {
     await auth.signOut();
     user = null;
     notifyListeners();
+  }
+
+  //logar com facebook
+  Future<void> facebookLogin({Function onFail, Function onSucess}) async {
+    loading = true;
+    final result = await FacebookLogin().logIn(['email', 'public_profile']);
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        //obter credenciais de login e enviar para firebase
+        final credential = FacebookAuthProvider.getCredential(
+          accessToken: result.accessToken.token,
+        );
+
+        //logar com credencial
+        final authResult = await auth.signInWithCredential(credential);
+
+        //verificar se usuario esta logado
+        if (authResult.user != null) {
+          final firebaseUser = authResult.user;
+
+          //salvar usuario no database
+          user = User(
+            id: firebaseUser.uid,
+            name: firebaseUser.displayName,
+            email: firebaseUser.email,
+          );
+
+          await user.saveData();
+          onSucess();
+        }
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        break;
+      case FacebookLoginStatus.error:
+        onFail(result.errorMessage);
+        break;
+    }
+    loading = false;
   }
 }

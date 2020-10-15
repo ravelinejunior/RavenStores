@@ -26,12 +26,6 @@ class ProductListTile extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: <Widget>[
-              //IMAGEM WIDGET
-              /*   AspectRatio(
-                aspectRatio: 1, // para deixar imagem quadrada
-                child: Image.network(product.images.first),
-              ), */
-
               FadeInImage.assetNetwork(
                 placeholder: 'assets/girlshopping.gif',
                 image: product.images.first.toString(),

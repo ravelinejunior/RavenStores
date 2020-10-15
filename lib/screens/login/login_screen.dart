@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:provider/provider.dart';
 import 'package:ravelinestores/helpers/validators.dart';
 import 'package:ravelinestores/models/user.dart';
@@ -55,6 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
           Center(
             //COLUMN COLOCADO PARA DEPOIS ADIÇÃO DE IMAGEM DE LOGO ACIMA DO CARD
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               elevation: 15,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Form(
@@ -148,6 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 50.0,
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(30, 30)),
+                          ),
                           splashColor: Colors.blue,
                           color: Color.fromARGB(255, 46, 125, 168),
                           textColor: Colors.white,
@@ -158,33 +167,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (formKey.currentState.validate()) {
                                     //receber acesso ao user manager
                                     userManager.signIn(
-                                        user: User(
-                                            email: emailController.text,
-                                            password: senhaController.text),
-                                        onFail: (e) {
-                                          _scaffoldKey.currentState
-                                              .showSnackBar(SnackBar(
-                                            content: Text(
-                                              "Falha ao logar: $e",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                      user: User(
+                                          email: emailController.text,
+                                          password: senhaController.text),
+                                      onFail: (e) {
+                                        _scaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                            "Falha ao logar: $e",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            backgroundColor: Colors.redAccent,
-                                            duration: Duration(seconds: 4),
-                                          ));
-                                        },
-                                        onSucess: () {
-                                          // #TODO: FECHAR TELA DE LOGIN
-                                          Navigator.of(context).pop();
-                                        });
+                                          ),
+                                          backgroundColor: Colors.redAccent,
+                                          duration: Duration(seconds: 4),
+                                        ));
+                                      },
+                                      onSucess: () {
+                                        // #TODO: FECHAR TELA DE LOGIN
+                                        Navigator.of(context).pop();
+                                      },
+                                    );
                                   }
                                 },
                           child: userManager.loading
                               ? CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
+                                    Colors.white,
+                                  ),
                                 )
                               : const Text(
                                   "Entrar",
@@ -192,6 +203,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                           disabledColor:
                               Theme.of(context).primaryColor.withAlpha(100),
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      SizedBox(
+                        height: 46,
+                        child: SignInButton(
+                          Buttons.Facebook,
+                          text: "Entrar com Facebook",
+                          onPressed: () {
+                            userManager.facebookLogin(
+                              onFail: (e) {
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                  content: Text(
+                                    "Falha ao logar: $e",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.redAccent,
+                                  duration: Duration(seconds: 4),
+                                ));
+                              },
+                              onSucess: () {
+                                // #TODO: FECHAR TELA DE LOGIN
+                                Navigator.of(context).pop();
+                              },
+                            );
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(30, 30)),
+                          ),
                         ),
                       ),
                     ],

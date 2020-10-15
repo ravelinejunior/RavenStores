@@ -26,7 +26,7 @@ class ProductScreen extends StatelessWidget {
             Consumer<UserManager>(
               builder: (context, userManager, child) {
                 //ENVIA PARA EDIÇÃO DE PRODUTO
-                if (userManager.adminEnabled)
+                if (userManager.adminEnabled && !product.deleted)
                   return IconButton(
                     icon: Icon(Icons.edit, color: Colors.white),
                     onPressed: () {
@@ -112,22 +112,37 @@ class ProductScreen extends StatelessWidget {
                   ),
 
                   //tamanhos widget
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                    child: Text(
-                      "Tipos",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.bold),
+
+                  if (product.deleted)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                      child: Text(
+                        "Produto indisponível no banco de dados.",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                    )
+                  else ...[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                      child: Text(
+                        "Tipos",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  //usar para envolver os widgets
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: product.sizesList.map((s) {
-                      return SizeWidget(size: s);
-                    }).toList(),
-                  ),
+                    //usar para envolver os widgets
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: product.sizesList.map((s) {
+                        return SizeWidget(size: s);
+                      }).toList(),
+                    ),
+                  ],
 
                   const SizedBox(height: 16),
                   //botao add ao carrinho Widget

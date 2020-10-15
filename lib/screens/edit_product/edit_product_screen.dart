@@ -39,39 +39,41 @@ class EditProductScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   showDialog(
-                      context: context,
-                      child: AlertDialog(
-                        title: Text("Excluir"),
-                        content: Text("Deseja realmente excluir esse produto?"),
-                        actions: [
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              "Não",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
+                    context: context,
+                    child: AlertDialog(
+                      title: Text("Excluir"),
+                      content: Text("Deseja realmente excluir esse produto?"),
+                      actions: [
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Não",
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          FlatButton(
-                            onPressed: () {
-                              context.read<ProductManager>().delete(product);
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              "Excluir",
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            context.read<ProductManager>().delete(product);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Excluir",
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ],
-                        elevation: 20,
-                        scrollable: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                      ));
+                        ),
+                      ],
+                      elevation: 20,
+                      scrollable: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  );
                 },
               ),
           ],
