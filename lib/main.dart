@@ -6,6 +6,7 @@ import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/managers/home_manager.dart';
 import 'package:ravelinestores/managers/orders_manager.dart';
 import 'package:ravelinestores/managers/product_manager.dart';
+import 'package:ravelinestores/managers/stores_manager.dart';
 import 'package:ravelinestores/managers/user_manager.dart';
 import 'package:ravelinestores/models/product.dart';
 import 'package:ravelinestores/screens/address/address_screen.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (productProvider) => ProductManager(),
           lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (storesProvider) => StoresManager(),
         ),
         ChangeNotifierProvider<HomeManager>(
           create: (contextHome) => HomeManager(),

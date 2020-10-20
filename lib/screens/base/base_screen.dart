@@ -9,6 +9,7 @@ import 'package:ravelinestores/screens/admin_users/admin_users_screen.dart';
 import 'package:ravelinestores/screens/home/home_screen.dart';
 import 'package:ravelinestores/screens/orders_screen/orders_screen.dart';
 import 'package:ravelinestores/screens/products/products_screen.dart';
+import 'package:ravelinestores/screens/stores/stores_screen.dart';
 
 class BaseScreen extends StatefulWidget {
   //page view que irá controlar o page view
@@ -44,16 +45,8 @@ class _BaseScreenState extends State<BaseScreen> {
               //meus pedidos
               OrdersScreen(),
 
-              Scaffold(
-                appBar: AppBar(
-                  title: const Text("Lojas"),
-                  elevation: 5,
-                  shadowColor: Colors.orange,
-                  backgroundColor: Colors.blueAccent,
-                  centerTitle: true,
-                ), //DRAWER WIDGET
-                drawer: CustomDrawer(),
-              ),
+              //lojas
+              StoreScreen(),
 
               Scaffold(
                 appBar: AppBar(
