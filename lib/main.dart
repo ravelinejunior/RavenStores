@@ -89,7 +89,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: "Raveline's Stores",
         theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 4, 125, 141),
+          // primaryColor: const Color.fromARGB(255, 4, 125, 141),
+          primaryColor: const Color.fromARGB(255, 46, 92, 138),
           accentColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),

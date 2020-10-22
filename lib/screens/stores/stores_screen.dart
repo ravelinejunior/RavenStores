@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:ravelinestores/common/custom_drawer/custom_drawer.dart';
 import 'package:ravelinestores/managers/stores_manager.dart';
 
+import 'components/store_card.dart';
+
 class StoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,21 @@ class StoreScreen extends StatelessWidget {
           ),
           Consumer<StoresManager>(
             builder: (contextOut, storesManager, childOut) {
-              return Container();
+              //procurando dados firebase
+              if (storesManager.stores.isEmpty) {
+                return LinearProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  backgroundColor: Colors.transparent,
+                );
+              } else {
+                //dados encontrados
+                return ListView.builder(
+                  itemCount: storesManager.stores.length,
+                  itemBuilder: (contextOut, index) {
+                    return StoreCard(storesManager.stores[index]);
+                  },
+                );
+              }
             },
           ),
         ],
