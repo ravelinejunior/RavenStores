@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(elevation: 0.0),
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: '/splash',
+        initialRoute: '/base',
         //settings recebe as informações da rota
         onGenerateRoute: (settings) {
           switch (settings.name) {

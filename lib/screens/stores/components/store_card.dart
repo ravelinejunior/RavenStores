@@ -1,28 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:ravelinestores/common/custom_widgets/custom_icon_button.dart';
 import 'package:ravelinestores/models/store.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoreCard extends StatelessWidget {
   final Store store;
   const StoreCard(this.store);
+
+  Color colorForStatus(StoreStatus status) {
+    switch (status) {
+      case StoreStatus.closed:
+        return Colors.red;
+        break;
+      case StoreStatus.closing:
+        return Colors.orange;
+        break;
+      case StoreStatus.open:
+        return Colors.green;
+        break;
+
+      default:
+        return Colors.greenAccent;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final primaryColor = Color.fromARGB(255, 46, 92, 138);
     return Card(
+      clipBehavior: Clip.antiAlias,
       elevation: 10,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
       ),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Column(
         children: [
-          //imagem
-          FadeInImage.assetNetwork(
-            placeholder: 'assets/girlshopping.gif',
-            image: store.image,
-            fit: BoxFit.fitWidth,
-            height: MediaQuery.of(context).size.height * 0.30,
-            width: MediaQuery.of(context).size.width,
+          Stack(
+            children: [
+              //imagem
+              FadeInImage.assetNetwork(
+                placeholder: 'assets/girlshopping.gif',
+                image: store.image,
+                fit: BoxFit.fitWidth,
+                height: MediaQuery.of(context).size.height * 0.30,
+                width: MediaQuery.of(context).size.width,
+              ),
+
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                    ),
+                  ),
+                  child: Text(
+                    store.statusText,
+                    style: TextStyle(
+                      color: colorForStatus(store.status),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
 
           const Divider(
@@ -62,9 +108,7 @@ class StoreCard extends StatelessWidget {
                           color: primaryColor,
                         ),
                       ),
-                      const Divider(
-                        color: Colors.grey,
-                      ),
+
                       //horario de funcionamento
                       Text(
                         store.openingText,
@@ -88,13 +132,13 @@ class StoreCard extends StatelessWidget {
                     CustomIconButton(
                       color: primaryColor,
                       iconData: Icons.location_on,
-                      onTap: () {},
+                      onTap: () => openMap(context),
                       size: 28,
                     ),
                     CustomIconButton(
                       color: primaryColor,
                       iconData: Icons.contacts,
-                      onTap: () {},
+                      onTap: () => openPhone(context),
                       size: 28,
                     ),
                   ],
@@ -105,5 +149,81 @@ class StoreCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+//ligar
+  Future<void> openPhone(BuildContext context) async {
+    if (await canLaunch("tel:${store.cleanPhone}!!"))
+      await launch("tel:${store.cleanPhone}");
+    else {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Este dispositivo não reconhece essa função!",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: StadiumBorder(),
+          duration: const Duration(seconds: 3),
+          elevation: 10,
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> openMap(BuildContext context) async {
+    try {
+      final availableMaps = await MapLauncher.installedMaps;
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => SafeArea(
+          top: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final map in availableMaps)
+                ListTile(
+                  shape: StadiumBorder(),
+                  title: Text(map.mapName),
+                  contentPadding: const EdgeInsets.all(16),
+                  focusColor: Colors.lightBlue,
+                  onTap: () {
+                    map.showMarker(
+                      coords: Coords(store.address.lat, store.address.long),
+                      title: store.name,
+                      description: store.addressText,
+                    );
+                    print(
+                        "Lat e long ${store.address.lat}, ${store.address.long}");
+                    Navigator.of(context).pop();
+                  },
+                  leading: Image(
+                    image: map.icon,
+                    width: 30,
+                    height: 30,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    } catch (e) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Este dispositivo não reconhece essa função!",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: StadiumBorder(),
+          duration: const Duration(seconds: 3),
+          elevation: 10,
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

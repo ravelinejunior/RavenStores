@@ -31,42 +31,45 @@ class _BaseScreenState extends State<BaseScreen> {
     return Provider(
       //será utilizado para verificar o estado da pagina atual
       create: (_) => PageManager(pageController),
-      child: Consumer<UserManager>(
-        builder: (context, userManager, child) {
-          return PageView(
-            controller: pageController,
-            //colocar as telas dentro do children
-            children: <Widget>[
-              //home
-              HomeScreen(),
-              //Produtos Screen
-              ProductsScreen(),
+      child: SafeArea(
+        top: true,
+        child: Consumer<UserManager>(
+          builder: (context, userManager, child) {
+            return PageView(
+              controller: pageController,
+              //colocar as telas dentro do children
+              children: <Widget>[
+                //home
+                HomeScreen(),
+                //Produtos Screen
+                ProductsScreen(),
 
-              //meus pedidos
-              OrdersScreen(),
+                //meus pedidos
+                OrdersScreen(),
 
-              //lojas
-              StoreScreen(),
+                //lojas
+                StoreScreen(),
 
-              Scaffold(
-                appBar: AppBar(
-                  title: const Text("Categorias"),
-                  elevation: 5,
-                  shadowColor: Colors.orange,
-                  backgroundColor: Colors.blueAccent,
-                  centerTitle: true,
-                ), //DRAWER WIDGET
-                drawer: CustomDrawer(),
-              ),
+                Scaffold(
+                  appBar: AppBar(
+                    title: const Text("Categorias"),
+                    elevation: 5,
+                    shadowColor: Colors.orange,
+                    backgroundColor: Colors.blueAccent,
+                    centerTitle: true,
+                  ), //DRAWER WIDGET
+                  drawer: CustomDrawer(),
+                ),
 
-              //admin part
-              if (userManager.adminEnabled) ...[
-                AdminUsersScreen(),
-                AdminOrdersScreen(),
-              ]
-            ],
-          );
-        },
+                //admin part
+                if (userManager.adminEnabled) ...[
+                  AdminUsersScreen(),
+                  AdminOrdersScreen(),
+                ]
+              ],
+            );
+          },
+        ),
       ),
     );
   }

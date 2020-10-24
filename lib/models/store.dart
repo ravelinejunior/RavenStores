@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ravelinestores/models/address.dart';
 import 'package:ravelinestores/helpers/extensions.dart';
 
-enum StoreStaus { close, open, closing }
+enum StoreStatus { closed, open, closing }
 
 class Store {
   Store.fromDocument(DocumentSnapshot documentSnapshot) {
@@ -41,7 +41,8 @@ class Store {
   String image;
   Address address;
   Map<String, Map<String, TimeOfDay>> opening;
-  StoreStaus status;
+  StoreStatus status;
+  String get cleanPhone => phone.replaceAll(RegExp(r"[^\d]"), "");
 
 //recupera texto com endereço
   String get addressText =>
@@ -76,10 +77,33 @@ class Store {
     }
 
     final now = TimeOfDay.now();
-    print("$period $now");
 
     if (period == null) {
-      status = StoreStaus.close;
+      status = StoreStatus.closed;
+    } else if (period['from'].toMinutes() < now.toMinutes() &&
+        period['to'].toMinutes() - 15 > now.toMinutes()) {
+      status = StoreStatus.open;
+    } else if (period['from'].toMinutes() < now.toMinutes() &&
+        period['to'].toMinutes() > now.toMinutes()) {
+      status = StoreStatus.closing;
+    } else {
+      status = StoreStatus.closed;
+    }
+  }
+
+  String get statusText {
+    switch (status) {
+      case StoreStatus.closed:
+        return 'Fechada';
+        break;
+      case StoreStatus.closing:
+        return 'Fechando';
+        break;
+      case StoreStatus.open:
+        return 'Aberta';
+        break;
+      default:
+        return '';
     }
   }
 }
