@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ravelinestores/models/address.dart';
 import 'package:ravelinestores/helpers/extensions.dart';
 
+enum StoreStaus { close, open, closing }
+
 class Store {
   Store.fromDocument(DocumentSnapshot documentSnapshot) {
     name = documentSnapshot.data['name'] as String;
@@ -30,6 +32,7 @@ class Store {
       }
     });
 
+    updateStatus();
     // print("Opening $opening");
   }
 
@@ -38,6 +41,7 @@ class Store {
   String image;
   Address address;
   Map<String, Map<String, TimeOfDay>> opening;
+  StoreStaus status;
 
 //recupera texto com endereço
   String get addressText =>
@@ -56,5 +60,26 @@ class Store {
     if (period == null) return "Fechada";
     //pegar horario de abertura e fechamento
     return "${period['from'].formattedTime()} - ${period['to'].formattedTime()}";
+  }
+
+  void updateStatus() {
+    //qual dia da semana
+    final weekDay = DateTime.now().weekday;
+
+    Map<String, TimeOfDay> period;
+    if (weekDay >= 1 && weekDay >= 5) {
+      period = opening['mon_fri'];
+    } else if (weekDay == 6) {
+      period = opening['saturday'];
+    } else {
+      period = opening['sunday'];
+    }
+
+    final now = TimeOfDay.now();
+    print("$period $now");
+
+    if (period == null) {
+      status = StoreStaus.close;
+    }
   }
 }
