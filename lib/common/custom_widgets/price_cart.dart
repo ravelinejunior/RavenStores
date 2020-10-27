@@ -27,17 +27,19 @@ class PriceCard extends StatelessWidget {
       elevation: 10,
       shadowColor: Colors.white,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Resumo do meu Pedido',
-              textAlign: TextAlign.start,
+              'Resumo do meu pedido'.toUpperCase(),
+              textAlign: TextAlign.center,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
             ),
+            Divider(),
             //linha de subTotal
             Container(
               margin: const EdgeInsets.symmetric(vertical: 16),

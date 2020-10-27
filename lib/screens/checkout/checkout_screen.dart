@@ -6,6 +6,8 @@ import 'package:ravelinestores/common/custom_widgets/price_cart.dart';
 import 'package:ravelinestores/managers/cart_manager.dart';
 import 'package:ravelinestores/managers/checkout_manager.dart';
 
+import 'components/credit_card_widget.dart';
+
 class CheckoutScreen extends StatefulWidget {
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
@@ -47,6 +49,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               if (!checkoutManager.loading)
                 return ListView(
                   children: [
+                    //cartão virtual
+                    CreditCardWidget(),
+
+                    //price card
                     PriceCard(
                       buttonText: "Finalizar Pedido",
                       color: colorButton,
