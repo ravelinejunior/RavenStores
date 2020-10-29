@@ -15,6 +15,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,87 +48,94 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           Consumer<CheckoutManager>(
             builder: (contextOut, checkoutManager, child) {
               if (!checkoutManager.loading)
-                return ListView(
-                  children: [
-                    //cartão virtual
-                    CreditCardWidget(),
+                return Form(
+                  key: _formState,
+                  child: ListView(
+                    children: [
+                      //cartão virtual
+                      CreditCardWidget(),
 
-                    //price card
-                    PriceCard(
-                      buttonText: "Finalizar Pedido",
-                      color: colorButton,
-                      icon: Icon(Icons.payment),
-                      onPressed: () {
-                        checkoutManager.checkout(
-                          onStockFail: (e) {
-                            _scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                elevation: 10,
-                                content: Card(
-                                  elevation: 0,
-                                  color: Colors.red,
-                                  margin: const EdgeInsets.all(8),
-                                  child: Text(
-                                    "PRODUTO ESGOTADO! REDIRECIONANDO USUARIO,AGUARDE ........",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                backgroundColor: Colors.red,
-                                duration: const Duration(seconds: 3),
-                                behavior: SnackBarBehavior.floating,
-                                shape: StadiumBorder(),
-                              ),
-                            );
-
-                            Future.delayed(Duration(seconds: 3)).then(
-                              (value) => Navigator.of(context).popUntil(
-                                  (route) => route.settings.name == '/cart'),
-                            );
-                          },
-                          onSucess: (order) {
-                            _scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                elevation: 10,
-                                content: Card(
-                                  elevation: 0,
-                                  color: Colors.transparent,
-                                  margin: const EdgeInsets.all(8),
-                                  child: Text(
-                                    "PEDIDO REALIZADO COM SUCESSO!!!",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
+                      //price card
+                      PriceCard(
+                        buttonText: "Finalizar Pedido",
+                        color: colorButton,
+                        icon: Icon(Icons.payment),
+                        onPressed: () {
+                          if (_formState.currentState.validate()) {
+                            checkoutManager.checkout(
+                              onStockFail: (e) {
+                                _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    elevation: 10,
+                                    content: Card(
+                                      elevation: 0,
+                                      color: Colors.red,
+                                      margin: const EdgeInsets.all(8),
+                                      child: Text(
+                                        "PRODUTO ESGOTADO! REDIRECIONANDO USUARIO,AGUARDE ........",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                    textAlign: TextAlign.center,
+                                    backgroundColor: Colors.red,
+                                    duration: const Duration(seconds: 3),
+                                    behavior: SnackBarBehavior.floating,
+                                    shape: StadiumBorder(),
                                   ),
-                                ),
-                                backgroundColor: Colors.green,
-                                duration: const Duration(seconds: 2),
-                                behavior: SnackBarBehavior.floating,
-                                shape: StadiumBorder(),
-                              ),
-                            );
+                                );
 
-                            Future.delayed(Duration(seconds: 2)).then(
-                              (value) {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pushNamed('/confirmation',
-                                    arguments: order);
+                                Future.delayed(Duration(seconds: 3)).then(
+                                  (value) => Navigator.of(context).popUntil(
+                                      (route) =>
+                                          route.settings.name == '/cart'),
+                                );
+                              },
+                              onSucess: (order) {
+                                _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    elevation: 10,
+                                    content: Card(
+                                      elevation: 0,
+                                      color: Colors.transparent,
+                                      margin: const EdgeInsets.all(8),
+                                      child: Text(
+                                        "PEDIDO REALIZADO COM SUCESSO!!!",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.green,
+                                    duration: const Duration(seconds: 2),
+                                    behavior: SnackBarBehavior.floating,
+                                    shape: StadiumBorder(),
+                                  ),
+                                );
+
+                                Future.delayed(Duration(seconds: 2)).then(
+                                  (value) {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pushNamed(
+                                        '/confirmation',
+                                        arguments: order);
+                                  },
+                                );
+
+                                /* Navigator.of(context).popUntil(
+                                (route) => route.settings.name == '/base',
+                              );
+                              */
                               },
                             );
-
-                            /* Navigator.of(context).popUntil(
-                              (route) => route.settings.name == '/base',
-                            );
-                            */
-                          },
-                        );
-                      },
-                    ),
-                  ],
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 );
               else
                 return Center(

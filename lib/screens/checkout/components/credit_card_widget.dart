@@ -5,6 +5,7 @@ import 'package:ravelinestores/screens/checkout/components/card_front.dart';
 
 class CreditCardWidget extends StatelessWidget {
   GlobalKey<FlipCardState> _flipKey = GlobalKey<FlipCardState>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
