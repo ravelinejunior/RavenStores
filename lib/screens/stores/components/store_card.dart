@@ -195,8 +195,7 @@ class StoreCard extends StatelessWidget {
                       title: store.name,
                       description: store.addressText,
                     );
-                    print(
-                        "Lat e long ${store.address.lat}, ${store.address.long}");
+
                     Navigator.of(context).pop();
                   },
                   leading: Image(
