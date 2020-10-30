@@ -1,12 +1,14 @@
 import 'package:brasil_fields/formatter/cartao_bancario_input_formatter.dart';
+import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 import 'package:ravelinestores/screens/checkout/components/card_text_field.dart';
 
 class CardFront extends StatelessWidget {
-  MaskTextInputFormatter dateMask =
-      MaskTextInputFormatter(mask: '!#/##', filter: {
+  final MaskTextInputFormatter dateMask =
+      MaskTextInputFormatter(mask: '!#/####', filter: {
     '#': RegExp('[0-9]'),
     '!': RegExp('[0-1]'),
   });
@@ -41,23 +43,26 @@ class CardFront extends StatelessWidget {
                         return "Campo obrigatório*";
                       else if (value.length != 19)
                         return "Preencha os campos corretamente.";
+                      else if (detectCCType(value) == CreditCardType.unknown)
+                        return "Bandeira de cartão não reconhecida.";
                       else
                         return null;
                     },
                   ),
                   CardTextField(
                     title: "Validade",
-                    hint: "11/27",
+                    hint: "11/2027",
                     bold: true,
                     textInputType: TextInputType.number,
                     inputFormaters: [
-                      FilteringTextInputFormatter.digitsOnly,
+                      //FilteringTextInputFormatter.digitsOnly,
                       dateMask,
+                      // WhitelistingTextInputFormatter.digitsOnly,
                     ],
                     formFieldValidator: (value) {
                       if (value.isEmpty)
                         return "Campo obrigatório*";
-                      else if (value.length != 5)
+                      else if (value.length != 7)
                         return "Preencha todos os campos corretamente.";
                       else
                         return null;
