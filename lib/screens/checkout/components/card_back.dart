@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:ravelinestores/screens/checkout/components/card_text_field.dart';
 
 class CardBack extends StatelessWidget {
+  final FocusNode cvvFocus;
+  const CardBack({this.cvvFocus});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,11 +29,9 @@ class CardBack extends StatelessWidget {
                   flex: 70,
                   child: Card(
                     margin: const EdgeInsets.only(left: 16),
-                    clipBehavior: Clip.antiAlias,
+                    color: Colors.accents.last.withAlpha(400),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: Colors.black54,
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
                     child: Container(
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -50,6 +51,7 @@ class CardBack extends StatelessWidget {
                           else
                             return null;
                         },
+                        focusNode: cvvFocus,
                       ),
                     ),
                   ),
