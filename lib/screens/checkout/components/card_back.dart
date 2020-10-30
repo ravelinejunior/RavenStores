@@ -26,7 +26,7 @@ class CardBack extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  flex: 70,
+                  flex: 50,
                   child: Card(
                     margin: const EdgeInsets.only(left: 16),
                     color: Colors.accents.last.withAlpha(400),
@@ -57,7 +57,7 @@ class CardBack extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  flex: 30,
+                  flex: 50,
                   child: Container(),
                 )
               ],
