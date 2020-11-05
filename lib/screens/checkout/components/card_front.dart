@@ -12,6 +12,18 @@ class CardFront extends StatelessWidget {
     '#': RegExp('[0-9]'),
     '!': RegExp('[0-1]'),
   });
+  final FocusNode numberFocus;
+  final FocusNode dateFocus;
+  final FocusNode nameFocus;
+  final VoidCallback finished;
+
+  CardFront({
+    this.numberFocus,
+    this.dateFocus,
+    this.nameFocus,
+    this.finished,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -48,6 +60,10 @@ class CardFront extends StatelessWidget {
                       else
                         return null;
                     },
+                    onSubmitted: (_) {
+                      dateFocus.requestFocus();
+                    },
+                    focusNode: numberFocus,
                   ),
                   CardTextField(
                     title: "Validade",
@@ -67,6 +83,10 @@ class CardFront extends StatelessWidget {
                       else
                         return null;
                     },
+                    onSubmitted: (_) {
+                      nameFocus.requestFocus();
+                    },
+                    focusNode: dateFocus,
                   ),
                   CardTextField(
                     title: "Nome",
@@ -79,6 +99,10 @@ class CardFront extends StatelessWidget {
                       else
                         return null;
                     },
+                    onSubmitted: (_) {
+                      finished();
+                    },
+                    focusNode: nameFocus,
                   ),
                 ],
               ),

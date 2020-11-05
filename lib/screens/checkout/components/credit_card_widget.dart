@@ -4,7 +4,11 @@ import 'package:ravelinestores/screens/checkout/components/card_back.dart';
 import 'package:ravelinestores/screens/checkout/components/card_front.dart';
 
 class CreditCardWidget extends StatelessWidget {
-  GlobalKey<FlipCardState> _flipKey = GlobalKey<FlipCardState>();
+  final GlobalKey<FlipCardState> _flipKey = GlobalKey<FlipCardState>();
+  final FocusNode numberFocus = FocusNode();
+  final FocusNode dateFocus = FocusNode();
+  final FocusNode nameFocus = FocusNode();
+  final FocusNode cvvFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +21,18 @@ class CreditCardWidget extends StatelessWidget {
             key: _flipKey,
             direction: FlipDirection.HORIZONTAL,
             speed: 1000,
-            front: CardFront(),
-            back: CardBack(),
+            front: CardFront(
+              numberFocus: numberFocus,
+              dateFocus: dateFocus,
+              nameFocus: nameFocus,
+              finished: () {
+                _flipKey.currentState.toggleCard();
+                cvvFocus.requestFocus();
+              },
+            ),
+            back: CardBack(
+              cvvFocus: cvvFocus,
+            ),
             flipOnTouch: false,
           ),
           FlatButton.icon(
