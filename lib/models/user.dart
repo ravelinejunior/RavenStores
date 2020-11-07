@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:ravelinestores/models/address.dart';
 
 class User {
@@ -7,6 +10,9 @@ class User {
 
   //referencia do cart Firestore
   CollectionReference get cartReference => firestoreRef.collection('cart');
+
+  //referencia do tokens Firestore
+  CollectionReference get tokenReference => firestoreRef.collection('token');
 
   //criar objeto com usuario logado
   User.fromDocument(DocumentSnapshot documentSnapshot) {
@@ -49,5 +55,15 @@ class User {
   Future<void> setAddress(Address address) async {
     this.address = address;
     saveData();
+  }
+
+  //salvar token usuario
+  Future<void> saveToken() async {
+    final token = await FirebaseMessaging().getToken();
+    await tokenReference.document(token).setData({
+      'token': token,
+      'updatedAt': FieldValue.serverTimestamp(),
+      'platform': Platform.operatingSystem,
+    });
   }
 }

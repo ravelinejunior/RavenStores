@@ -70,6 +70,7 @@ class UserManager extends ChangeNotifier {
 
       //aguardar dados serem salvos
       await user.saveData();
+      user.saveToken();
       onSuccess();
     } on PlatformException catch (e) {
       onFail(getErrorString(e.code));
@@ -92,7 +93,7 @@ class UserManager extends ChangeNotifier {
       if (docAdmin.exists) {
         user.admin = true;
       }
-
+      await user.saveToken();
       notifyListeners();
     }
   }
@@ -133,6 +134,7 @@ class UserManager extends ChangeNotifier {
           );
 
           await user.saveData();
+          await user.saveToken();
           onSucess();
         }
         break;
